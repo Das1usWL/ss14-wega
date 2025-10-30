@@ -230,4 +230,8 @@
 - type: Tag
   id: SyndicateRapier
 
-
+- type: Tag
+  id: Shrimp
+  
+- type: Tag
+  id: Cook
