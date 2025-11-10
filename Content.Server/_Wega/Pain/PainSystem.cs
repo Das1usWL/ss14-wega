@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
-using Content.Server.Medical;
 using Content.Shared.Jittering;
+using Content.Shared.Medical;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pain;
 using Content.Shared.Pain.Components;
@@ -46,7 +46,7 @@ public sealed class PainSystem : EntitySystem
 
     private void OnInit(EntityUid uid, PainComponent component, ComponentInit args)
     {
-        if (!_proto.TryIndex<PainProfilePrototype>(component.Profile, out var profile))
+        if (!_proto.TryIndex(component.Profile, out var profile))
             return;
 
         foreach (var (type, level) in profile.PainTypes)

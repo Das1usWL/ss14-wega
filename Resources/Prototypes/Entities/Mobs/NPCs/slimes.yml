@@ -74,15 +74,15 @@
     - reagents: [ Water, SpaceCleaner ]
       methods: [ Touch ]
       effects:
-      - !type:WashCreamPieReaction
+      - !type:WashCreamPie
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         damage:
           types:
-            Heat: 0.15
+            Heat: 0.05 #Same as slime species
       - !type:PopupMessage
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
@@ -110,6 +110,7 @@
     speechSounds: Slime
   - type: TypingIndicator
     proto: slime
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   name: basic slime

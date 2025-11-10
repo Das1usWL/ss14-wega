@@ -390,7 +390,7 @@
   - type: Bloodstream
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
-  - type: Food
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - horrible
@@ -441,6 +441,7 @@
     damage:
       types:
         Piercing: 0
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   name: glockroach
@@ -1004,6 +1005,7 @@
       task: RuminantCompound
   - type: Body
     prototype: AnimalHemocyanin
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   name: goat
@@ -1220,6 +1222,8 @@
         true
       NavSmash: !type:Bool
         true
+  - type: Puller
+    needsHands: false
   - type: Prying
     pryPowered: true
     force: true
@@ -1335,6 +1339,7 @@
   abstract: true
   components:
   - type: CombatMode
+    canDisarm: true
   - type: Inventory
     templateId: monkey
     speciesId: monkey
@@ -1441,8 +1446,9 @@
     - reagents: [ Water, SpaceCleaner ]
       methods: [ Touch ]
       effects:
-      - !type:WashCreamPieReaction
+      - !type:WashCreamPie
   - type: Crawler
+  - type: VentCrawler # Corvax-Wega-VentCrawling
   # Corvax-Wega-Surgery-start
   - type: Operated
     raceGraph: PrimateSurgery
@@ -1815,7 +1821,7 @@
         Base: dead-0
       Dead:
         Base: splat-0
-  - type: Food
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - meaty
@@ -1914,6 +1920,7 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   parent: MobMouse
@@ -2013,6 +2020,12 @@
   parent: MobMouse
   id: MobMouseCancer
   components:
+  - type: GhostRole
+    name: ghost-role-information-cancer-mouse-name
+    description: ghost-role-information-cancer-mouse-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: Sprite
     color: LightGreen
   - type: PointLight
@@ -2144,6 +2157,7 @@
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   name: frog
@@ -2212,6 +2226,7 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -2378,7 +2393,7 @@
   - type: MobMover
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: GrenadePenguinCompound
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -2426,9 +2441,9 @@
     beepInterval: 1
   - type: Explosive
     explosionType: Default
-    maxIntensity: 20
-    intensitySlope: 20
-    totalIntensity: 225
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 150
   - type: ExplodeOnTrigger
     keysIn:
     - timer
@@ -2487,6 +2502,7 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -2580,6 +2596,7 @@
         Brute: -0.07
         Burn: -0.07
   # Corvax-Wega-start
+  - type: VentCrawler # Corvax-Wega-VentCrawling
   - type: NaturalNightVision # Corvax-Wega-NightVision
     tintColor: "#931a32"
     visible: true
@@ -3075,6 +3092,7 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   name: cat
@@ -3503,7 +3521,7 @@
         Base: dead-0
       Dead:
         Base: splat-0
-  - type: Food
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - meaty
@@ -3580,6 +3598,7 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   name: pig

@@ -271,6 +271,7 @@
   - type: TypingIndicator
     proto: spider
   - type: NaturalNightVision # Corvax-Wega-NightVision
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   id: MobSpiderSpaceSalvage
@@ -455,7 +456,7 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Food
+  - type: Edible
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
     thresholds:
@@ -513,7 +514,7 @@
       methods: [Touch, Ingestion, Injection]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
+        scaling: true
         damage:
           types:
             Caustic: 1
@@ -522,6 +523,7 @@
         visualType: Large
         messages: [ "snail-hurt-by-salt-popup" ]
         probability: 0.66
+  - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
   parent: MobSnail
