@@ -13,7 +13,7 @@
     - id: AstroNavCartridge
     - id: ClothingHandsKnuckleDustersQM
     - id: PrinterDocFlatpack # Corvax-Printer
-    - id: FundingAllocationComputerCircuitboard # Corvax-Wega
+    - id: FundingAllocationComputerFlatpack # Corvax-Wega
 
 
 - type: entity
@@ -52,6 +52,7 @@
       conditions:
       - !type:PlayerCountCondition
         max: 15
+    - id: SecApartmentTablet # Corvax-Wega-SecApartment
     # Corvax-Resprite-Start
     - id: ClothingHeadCaptainHat
     - id: ClothingOuterCoatCaptain
@@ -216,12 +217,11 @@
   table: !type:AllSelector
     children:
     - id: BoxEncryptionKeyMedical
-    - id: SurgerykitFilled # Corvax-Wega-Surgery-Edit
-    - id: ClothingCloakCmo
-    - id: ClothingEyesHudMedical
-    - id: ClothingHandsGlovesNitrile
+    - id: SurgerykitFilledPro # Corvax-Wega-Surgery-Edit
     - id: ClothingHandsGlovesLatexSurgeon # Corvax-Wega-Surgery
-    - id: ClothingHeadHatBeretCmo
+    - id: ClothingBackpackDuffelSurgeryFilled
+    - id: ClothingEyesGlassesMedSunglasses
+    - id: ClothingHandsGlovesNitrile
     - id: ClothingHeadsetAltMedical
     - id: ClothingMaskSterile
     - id: UniformScrubsColorCmo # Corvax-Wega-Surgery
@@ -234,6 +234,7 @@
     - id: RubberStampCMO
     - id: MedTekCartridge
     - id: BodyScannerComputerCircuitboard # Corvax-Wega-Surgery
+    - id: FoodBoxLollipop # Corvax-Wega-Candy
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -332,7 +333,6 @@
     - id: ClothingBeltSecurityFilled
     - id: ClothingEyesGlassesSecurity
     - id: ClothingHeadsetAltSecurity
-    - id: ClothingMaskNeckGaiter
     - id: ClothingOuterCoatHoSTrench
     - id: ClothingShoesBootsJack
     - id: FlashlightSeclite
@@ -347,6 +347,11 @@
     # Corvax-Wega-Start
     - id: ServerWiretappingKit
     - id: WiretappingTerminal
+    - id: ClothingOuterWinterHoS
+    - id: SecurityVoucherCard
+      amount: !type:ConstantNumberSelector
+        value: 2
+    - id: SecApartmentTablet # Corvax-Wega-SecApartment
     # Corvax-Wega-End
     # Corvax-Start
     - id: ClothingHeadHatCapHoS

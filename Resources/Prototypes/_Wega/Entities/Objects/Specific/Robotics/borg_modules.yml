@@ -1,4 +1,34 @@
-## module
+## base module
+- type: entity
+  id: BaseBorgModuleSecurity
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleSecurity
+  - type: BorgModule
+    borgFitTypes:
+    - borg-type-sec
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#db3e2a"
+      - state: base-module-inhand-left
+        color: "#B22222"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#db3e2a"
+      - state: base-module-inhand-right
+        color: "#B22222"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+
+## Med Module
 - type: entity
   id: BorgModuleSurgery
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
@@ -13,14 +43,18 @@
   - type: ItemBorgModule
     hands:
     - item: ScalpelAS
-    - item: CauteryAS
-    - item: RetractorAS
-    - item: HemostatAS
-    - item: FixOVeinAS
-    - item: SawAS
-    - item: DrillAS
-    - item: BoneSetterAS
-    - item: BoneGelAS
+      hand:
+        emptyLabel: borg-slot-surgery-empty
+        emptyRepresentative: ScalpelAS
+        whitelist:
+          tags:
+          - Itemborg
+    - hand:
+        emptyLabel: borg-slot-surgery-empty
+        emptyRepresentative: CauteryAS
+        whitelist:
+          tags:
+          - Itemborg
     - item: SprayBottle
     - item: BorgDropper
     - hand:
@@ -42,8 +76,9 @@
           - Pill
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: surgery-module }
-    
-    
+
+# Cargo Module
+
 - type: entity
   id: BorgModuleKinetic
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
@@ -61,13 +96,15 @@
     - item: WeaponCrusherDagger
     - item: TrofeiBag
     - hand:
-        emptyRepresentative: MicroManipulatorStockPart
+        emptyRepresentative: PKAUpgradeDamage
         emptyLabel: borg-slot-PKA-empty
         whitelist:
           tags:
           - PKAUpgrade
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: kinetic-weapon-module }
+
+## Basic Module
 
 - type: entity
   id: BorgModuleCommonMedical
@@ -82,6 +119,8 @@
     - state: icon-treatment-common
   - type: ItemBorgModule
     hands:
+    - item: HandheldHealthAnalyzer
+    - item: DefibrillatorOneHandedUnpowered
     - item: Brutepack
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -89,17 +128,22 @@
         whitelist:
           components:
           - Healing
-    - item: Ointment
+    - item: BorgHypoTricordrazineBase
       hand:
-        emptyLabel: borg-slot-topicals-empty
-        emptyRepresentative: Ointment
+        emptyLabel: borg-slot-hypo-empty
+        emptyRepresentative: BorgHypoTricordrazineBase
         whitelist:
-          components:
-          - Healing
-    - item: Syringe
+          tags:
+          - Itemborg
+    - hand:
+        emptyLabel: borg-slot-hypo-empty
+        emptyRepresentative: BorgHypoEpinephrineBase
+        whitelist:
+          tags:
+          - Itemborg
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: medical-common-module }
-    
+
 - type: entity
   id: BorgModuleCommonPen
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
@@ -116,7 +160,7 @@
     - item: Pen
     - hand:
         emptyLabel: borg-slot-documents-empty
-        emptyRepresentative: Paper
+        emptyRepresentative: BookBase
         whitelist:
           tags:
           - Book
@@ -125,6 +169,15 @@
           - Figurine
           - TabletopBoard
           - Write
+    - hand:
+        emptyLabel: borg-slot-dice-figure-empty
+        emptyRepresentative: d20Dice
+        whitelist:
+          tags:
+          - Dice
+          - Figurine
+    - item: BooksBag
+    - item: ChameleonPDA
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: pen-common-module }
 
@@ -172,6 +225,8 @@
         whitelist:
           tags:
           - Ore
+          - ArtifactFragment
+    - item: BorgOreBag
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: pickaxe-common-module }
 
@@ -195,20 +250,197 @@
           tags:
           - ConstructionMaterial
     - hand:
-        emptyRepresentative: SpaceHeaterFlatpack
-        emptyLabel: borg-slot-flatpacks-empty
+        emptyRepresentative: DoorElectronics
+        emptyLabel: borg-slot-circuitboards-empty
         whitelist:
           components:
-          - Flatpack
-    - hand:
-        emptyRepresentative: FloorTileItemSteel
-        emptyLabel: borg-slot-tiles-empty
-        whitelist:
+          - Circuitboard
+        blacklist:
           components:
-          - FloorTile
+          - SiliconLawProvider
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: build-common-module }
+
+- type: entity
+  id: BorgModuleCommonHand
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: hands common module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: generic
+    - state: icon-hand
+  - type: ItemBorgModule
+    hands:
+    - hand:
+        emptyRepresentative: WeaponHandOfGod
+        emptyLabel: borg-slot-hand-empty
+        blacklist:
+          tags:
+          - Backpack
+    - hand:
+        emptyRepresentative: WeaponHandOfGod
+        emptyLabel: borg-slot-hand-empty
+        blacklist:
+          tags:
+          - Backpack
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: hand-module }
+
+- type: entity
+  id: BorgModuleCommonSpeed
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: speed common module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: generic
+    - state: icon-speed
+  - type: ItemBorgModule
+    hands:
+    - item: SpeedModeDevice
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: speed }
     
+- type: entity
+  id: BorgModuleCommonMagBoots
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: magboots common module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: generic
+    - state: icon-magboots
+  - type: ItemBorgModule
+    hands:
+    - item: MagbootsModeDevice
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: magboots }
+
+- type: entity
+  id: BorgModuleCommonCandy
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: candy module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: generic
+    - state: icon-candy
+  - type: ItemBorgModule
+    hands:
+    - item: BorgGeneratorCommonCandy
+    - hand:
+        emptyRepresentative: FoodProduceLollipopMedical
+        emptyLabel: borg-slot-candy-empty
+        whitelist:
+          tags:
+          - Lollipops
+    - item: BorgDrinkSolutionWaterCommon
+    - item: BorgGeneratorCup
+    - hand:
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: DrinkGlass
+        whitelist:
+          components:
+          - FitsInDispenser
+          - SolutionContainerManager
+          tags:
+          - ChemDispensable
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: candy-module }
+ 
+- type: entity
+  id: BorgModuleCommonRepeir
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: repeir module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: generic
+    - state: icon-repeir
+  - type: ItemBorgModule
+    hands:
+    - item: RepeirModeDevice
+    - hand:
+        emptyRepresentative: Nanopast
+        emptyLabel: borg-slot-nanopasta-empty
+        whitelist:
+          tags:
+          - Nanopast
+    - item: BorgGeneratorNanopast
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: repeir-module }
+    
+- type: entity
+  id: BorgModuleMusique
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: musique cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-musique
+  - type: ItemBorgModule
+    hands:
+    - item: SynthesizerInstrument
+      hand:
+        emptyLabel: borg-slot-instruments-empty
+        emptyRepresentative: SynthesizerInstrument
+        whitelist:
+          components:
+          - Instrument
+    - item: ElectricGuitarInstrument
+      hand:
+        emptyLabel: borg-slot-instruments-empty
+        emptyRepresentative: ElectricGuitarInstrument
+        whitelist:
+          components:
+          - Instrument
+    - item: SaxophoneInstrument
+      hand:
+        emptyLabel: borg-slot-instruments-empty
+        emptyRepresentative: SaxophoneInstrument
+        whitelist:
+          components:
+          - Instrument
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: musical-module }
+    
+- type: entity
+  id: BorgModuleCleaningCommon
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: cleaning common cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-mop
+  - type: ItemBorgModule
+    hands:
+    - item: BorgMopItem
+    - item: Bucket
+    - item: Beaker
+      hand:
+        emptyLabel: borg-slot-beakers-empty
+        emptyRepresentative: Beaker
+        whitelist:
+          components:
+          - FitsInDispenser
+    - item: SprayBottle
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: cleaning-module }
+# Servive Module
+
 - type: entity
   id: BorgModuleCook
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
@@ -243,10 +475,13 @@
         emptyRepresentative: ReagentContainerFlour
         emptyLabel: borg-slot-ingredient-empty
         whitelist:
+          components:
+          - SlimeFood
           tags:
           - Ingredient
           - Enzyme
           - Mayo
+          - FoodSnack
     - hand:
         emptyRepresentative: FoodMeat
         emptyLabel: borg-slot-meat-empty
@@ -262,7 +497,7 @@
           - Fruit
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: cook-module }
-    
+
 - type: entity
   id: BorgModuleBar
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
@@ -285,115 +520,626 @@
           components:
           - FitsInDispenser
     - item: BarSpoon
+    - item: Crowbar
+    - item: DrinkGlass
+      hand:
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: DrinkGlass
+        whitelist:
+          components:
+          - FitsInDispenser
+          - SolutionContainerManager
+          tags:
+          - ChemDispensable
   - type: BorgModuleIcon
     icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: bar-module }
-## borg-item
-  
-- type: entity
-  name: proto-kinetic accelerator1
-  id: WeaponProtoKineticAcceleratorBorg
-  parent: BaseItem
-  description: Fires low-damage kinetic bolts at a short range.
-  suffix: Borg
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    layers:
-    - state: icon
-    - state: animation-icon
-      visible: false
-      map: [ "empty-icon" ]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    size: Large
-    shape:
-    - 0,0,2,1   
-  - type: Gun
-    fireRate: 0.5
-    selectedMode: SemiAuto
-    angleDecay: 0
-    minAngle: 0
-    maxAngle: 0
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
-  - type: AmmoCounter
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.AmmoVisuals.HasAmmo:
-        empty-icon:
-          True: { visible: False }
-          False: { visible: True }
-        #todo: add other 'empty' animations
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 0.75
-    rechargeSound:
-      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
-  - type: BasicEntityAmmoProvider
-    proto: BulletKinetic
-    capacity: 1
-    count: 1
-  - type: UseDelay
-    delay: 1
-  - type: UpgradeableGun
-    whitelist:
-      tags:
-      - PKAUpgrade
-  - type: ContainerContainer
-    containers:
-      upgrades: !type:Container
+
+# Security module
 
 - type: entity
-  parent: WeaponMeleeNeedle
-  id: WeaponMeleeNeedleBorg
-  name: security damage stick 
-  description: A specialty weapon used in the destruction of unique syndicate morale-boosting equipment.
+  id: BorgModuleDisabler
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: disabler module
+  description: Everyone can heal your action!
   components:
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    damage:
-      types:
-        Piercing: 12
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 0
-        
-- type: entity
-  name: pickaxe
-  parent: BaseItem
-  id: PickaxeBorg
-  description: Notched to perfection, for jamming it into rocks.
-  components:
-  - type: Tag
-    tags:
-    - Pickaxe
   - type: Sprite
-    sprite: Objects/Weapons/Melee/pickaxe.rsi
-    state: pickaxe
-  - type: MeleeWeapon
-    attackRate: 0.7
-    wideAnimationRotation: -135
-    soundHit:
-      path: "/Audio/Weapons/smash.ogg"
-      params:
-        volume: -3
-    damage:
-      groups:
-        Brute: 10
-      types:
-        Structural: 30
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: security
+    - state: icon-dis
+  - type: ItemBorgModule
+    hands:
+    # - item: StunprodBorg
+    - item: WeaponBorgDisabler
+    - item: WeaponMeleeNeedleBorgSec
+    - item: Flash
+      hand:
+        emptyLabel: borg-slot-flash-empty
+        emptyRepresentative: Flash
+        whitelist:
+          components:
+          - Flash
+    - item: HoloprojectorSecurityMicrowave
+    - item: Zipties
+      hand:
+        emptyLabel: borg-slot-zipties-empty
+        emptyRepresentative: Zipties
+        whitelist:
+          tags:
+          - Handcuffs
+    - item: BoxZiptie
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: zipper-module }
+
+- type: entity
+  id: BorgModuleDetective
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: detective module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: security
+    - state: icon-dec
+  - type: ItemBorgModule
+    hands:
+    - item: ForensicScanner
+    - item: DetectivePDABorg
+    - item: Crowbar
+    - item: ForensicPad
+      hand:
+        emptyLabel: borg-slot-forensic-pad-empty
+        emptyRepresentative: EvidenceMarkerOne
+        whitelist:
+          tags:
+          - EvidenceMarker
+          - Document
+    - item: BoxEvidenceMarkers
+    - item: BorgDropper
+    - item: Beaker
+      hand:
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: Beaker
+        whitelist:
+          components:
+          - FitsInDispenser
+          tags:
+          - ChemDispensable
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: dec-module }
+
+- type: entity
+  id: BorgModuleSheild
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: sheld module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: security
+    - state: icon-sheild
+  - type: ItemBorgModule
+    hands:
+    - item: TelescopicShieldBorg
+    - hand:
+        emptyRepresentative: Nanopast
+        emptyLabel: borg-slot-nanopasta-empty
+        whitelist:
+          tags:
+          - Nanopast
+    - item: BorgGeneratorNanopast
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: sheild-module }
+
+- type: entity
+  id: BorgModuleGranader
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: grenader module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: security
+    - state: icon-grenade
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponHandGranadeGun
+    - hand:
+        emptyLabel: borg-slot-granade-empty
+        emptyRepresentative: ModularGrenade
+        whitelist:
+          tags:
+          - HandGrenade
+          - Payload
+          - VoiceTrigger
+    - item: BoxBorgGranade
+    - hand:
+        emptyLabel: borg-slot-cabeldet-empty
+        emptyRepresentative: CableDetStack
+        whitelist:
+          tags:
+          - Payload
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: grenade-module }
+
+- type: entity
+  id: BorgModuleLethal
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: lethal module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: security
+    - state: icon-gun
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponBorgLethal
+    - item: Truncheon
+    - item: Flash
+      hand:
+        emptyLabel: borg-slot-flash-empty
+        emptyRepresentative: Flash
+        whitelist:
+          components:
+          - Flash
+    - item: RiotBulletShieldBorg
+      hand:
+        emptyLabel: borg-slot-shield-empty
+        emptyRepresentative: RiotBulletShieldBorg
+        whitelist:
+          tags:
+          - Itemborg
+    - hand:
+        emptyLabel: borg-slot-shield-empty
+        emptyRepresentative: RiotLaserShieldBorg
+        whitelist:
+          tags:
+          - Itemborg
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: gun-module }
+## Rare
+- type: entity
+  id: BorgModuleSecRare
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: turel module
+  suffix: rare
+  description: Everyone can heal your action!
+  components:
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,2,0
-    - 1,1,1,2
-    sprite: Objects/Weapons/Melee/pickaxe.rsi
-    storedRotation: -45
-  - type: UseDelay
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
-      Wood: 100
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#db3e2a"
+      - state: base-module-inhand-left
+        color: "#1e548a"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#db3e2a"
+      - state: base-module-inhand-right
+        color: "#1e548a"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-gun-rare
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponBorgTurel
+      hand:
+        emptyLabel: borg-slot-turelgun-empty
+        emptyRepresentative: WeaponBorgTurel
+        whitelist:
+          tags:
+          - Itemborg
+    - hand:
+        emptyLabel: borg-slot-turelgun-empty
+        emptyRepresentative: WeaponBorgTurel
+        whitelist:
+          tags:
+          - Itemborg  
+    - item: TelescopicShieldBorg
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: lethal-rare }
+
+- type: entity
+  id: BorgModuleCargoRare
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: plasma cutter module
+  suffix: rare
+  description: Everyone can heal your action!
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#db3e2a"
+      - state: base-module-inhand-left
+        color: "#1e548a"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#db3e2a"
+      - state: base-module-inhand-right
+        color: "#1e548a"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-mining-rare
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponPlasmaCutter
+    - item: AdvancedMineralScannerUnpowered
+    - hand:
+        emptyLabel: borg-slot-ore-empty
+        emptyRepresentative: Coal
+        whitelist:
+          tags:
+          - Ore
+          - ArtifactFragment
+    - item: BorgOreBagOfHolding
+    - item: BorgOreBagOfHolding
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: mining-rare }
+
+- type: entity
+  id: BorgModuleCleanerRare
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: turbo cleaning module
+  suffix: rare
+  description: Everyone can heal your action!
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#db3e2a"
+      - state: base-module-inhand-left
+        color: "#1e548a"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#db3e2a"
+      - state: base-module-inhand-right
+        color: "#1e548a"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-mop-rare
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponHydraBorg
+    - item: LightReplacerBorg
+    - item: BorgTrashBag
+    - item: BorgTrashBag
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: ubor-rare }
+
+- type: entity
+  id: BorgModuleEngenerRare
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  name: combat RCD module
+  suffix: rare
+  description: Everyone can heal your action!
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#db3e2a"
+      - state: base-module-inhand-left
+        color: "#1e548a"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#db3e2a"
+      - state: base-module-inhand-right
+        color: "#1e548a"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-rcd-rare
+  - type: ItemBorgModule
+    hands:
+    - item: RCDCombatRecharging
+    - item: BorgGeneratorMaterialRod
+    - item: BorgGeneratorTile
+    - item: BorgGeneratorMaterialSteal
+    - item: BorgGeneratorMaterialPlasteel
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: rcd-rare }
+
+- type: entity
+  id: BorgModuleServiceRare
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: product module
+  suffix: rare
+  description: Everyone can heal your action!
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#db3e2a"
+      - state: base-module-inhand-left
+        color: "#1e548a"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#db3e2a"
+      - state: base-module-inhand-right
+        color: "#1e548a"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-cook-rare
+  - type: ItemBorgModule
+    hands:
+    - item: MicrowaveForBorg
+    - item: BorgGeneratorPocket
+    - item: BorgGeneratorMeat
+    - hand:
+        emptyRepresentative: BorgIconKitchenIcon
+        emptyLabel: borg-slot-food-empty
+        whitelist:
+          components:
+          - Edible
+    - item: BorgDrinkSolutionWater
+      hand:
+        emptyLabel: borg-slot-drinks-empty
+        emptyRepresentative: BorgDrinkSolutionWater
+        whitelist:
+          tags:
+          - Itemborg
+    - hand:
+        emptyLabel: borg-slot-drinks-empty
+        emptyRepresentative: BorgDrinkSolutionCoffe
+        whitelist:
+          tags:
+          - Itemborg
+    - item: BorgGeneratorDrinkGlass
+    - hand:
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: DrinkGlass
+        whitelist:
+          components:
+          - FitsInDispenser
+          - SolutionContainerManager
+          tags:
+          - ChemDispensable
+    - item: BoxFreezer
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: cook-rare }
+
+- type: entity
+  id: BorgModuleMedicalRare
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: generation module
+  suffix: rare
+  description: Surgical module, built-in all necessary surgical instruments and sterilization device. Now cutting out the brain of a crew member has become easier!
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#db3e2a"
+      - state: base-module-inhand-left
+        color: "#1e548a"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#db3e2a"
+      - state: base-module-inhand-right
+        color: "#1e548a"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-doc-rare
+  - type: ItemBorgModule
+    hands:
+    - item: BorgHypoTricordrazine
+      hand:
+        emptyLabel: borg-slot-hypo-empty
+        emptyRepresentative: BorgHypoTricordrazine
+        whitelist:
+          tags:
+          - Itemborg
+    - hand:
+        emptyLabel: borg-slot-hypo-empty
+        emptyRepresentative: BorgHypoBicaridine
+        whitelist:
+          tags:
+          - Itemborg
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: med-rare }
+
+## Syndicate
+- type: entity
+  id: BorgModuleChina
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  name: china cyborg module
+  description: A weapons module that comes with a double energy sword.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponLauncherChinaLakeBorg
+    - hand:
+        emptyRepresentative: Nanopast
+        emptyLabel: borg-slot-nanopasta-empty
+        whitelist:
+          tags:
+          - Nanopast
+    - item: BorgGeneratorNanopast
+    - item: PinpointerSyndicateNuclear
+    - item: PinpointerUniversal # Corvax-Wega-Robot-add
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: china-module }
+
+## Xenoborg
+- type: entity
+  id: BorgModuleXenoConstruction
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband  ]
+  name: construction xenoborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-construction
+  - type: ItemBorgModule
+    hands:
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - hand:
+        emptyRepresentative: FloorTileItemSteel
+        emptyLabel: borg-slot-tiles-empty
+        whitelist:
+          components:
+          - FloorTile
+    - item: XenoborgMaterialBag
+    - hand:
+        emptyRepresentative: NTDefaultCircuitBoard
+        emptyLabel: borg-slot-circuitboards-empty
+        whitelist:
+          components:
+          - Circuitboard
+    - hand:
+        emptyRepresentative: CableApcStack10
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+          - CableCoil
+    - hand:
+        emptyRepresentative: SpaceHeaterFlatpack
+        emptyLabel: borg-slot-flatpacks-empty
+        whitelist:
+          components:
+          - Flatpack
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: construction-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgHoloprojector
+  name:  holoprojector xenoborg module
+  description: Module with a laser gun.
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: xenoborg_heavy
+    - state: icon-xenoborg-holowall
+  - type: ItemBorgModule
+    hands:
+    - item: XenoborgHoloprojectorForcefield
+    - hand:
+        emptyRepresentative: Nanopast
+        emptyLabel: borg-slot-nanopasta-empty
+        whitelist:
+          tags:
+          - Nanopast
+    - item: BorgGeneratorNanopast
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: xfield-module }
+
+- type: entity
+  id: XenoborgModuleCommonRepeir
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  name: repeir xenoborg module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: xenoborg_generic
+    - state: icon-repeir
+  - type: ItemBorgModule
+    hands:
+    - item: RepeirModeDeviceXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: repeir-xenoborg-module }
+
+- type: entity
+  id: XenoborgModuleCommonSpeed
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  name: speed xenoborg module
+  description: Everyone can heal your action!
+  components:
+  - type: Sprite
+    sprite: _Wega/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: xenoborg_generic
+    - state: icon-speed
+  - type: ItemBorgModule
+    hands:
+    - item: SpeedModeDevice
+  - type: BorgModuleIcon
+    icon: { sprite: _Wega/Interface/Actions/actions_borg.rsi, state: speed_xenoborg }
+    
+- type: entity
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleToolMother
+  name: tool mothership module
+  description: Simple tools for most mothership.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-tools
+  - type: ItemBorgModule
+    hands:
+    - item: JawsOfLife
+    - item: PowerDrill
+    - item: WelderExperimental
+    - item: Multitool
+    - item: RemoteSignallerAdvanced
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tool-module }

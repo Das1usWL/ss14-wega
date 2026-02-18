@@ -7,6 +7,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DirtVisuals;
 using Content.Shared.FixedPoint;
@@ -141,7 +142,7 @@ public sealed partial class SurgerySystem
         }
 
         // Any action without anesthesia will cause pain.
-        if (!HasComp<SleepingComponent>(patient) && !HasComp<PainNumbnessComponent>(patient) && !comp.OperatedPart
+        if (!HasComp<SleepingComponent>(patient) && !HasComp<PainNumbnessStatusEffectComponent>(patient) && !comp.OperatedPart
             && !_mobState.IsDead(patient) && !HasComp<SyntheticOperatedComponent>(patient))
             _chat.TryEmoteWithoutChat(patient, _proto.Index(Scream), true);
     }
@@ -159,7 +160,14 @@ public sealed partial class SurgerySystem
         if (!TryComp<BloodstreamComponent>(patient, out var bloodstream) || HasComp<SyntheticOperatedComponent>(patient))
             return;
 
-        ApplyBloodToClothing(patient.Comp.Surgeon.Value, bloodstream.BloodReagent, 2f * SharedDirtSystem.MaxDirtLevel);
+        string? bloodReagentId = null;
+        if (bloodstream.BloodReferenceSolution.Contents.Count > 0)
+        {
+            var reagentQuantity = bloodstream.BloodReferenceSolution.Contents[0];
+            bloodReagentId = reagentQuantity.Reagent.Prototype;
+        }
+
+        ApplyBloodToClothing(patient.Comp.Surgeon.Value, bloodReagentId, 2f * SharedDirtSystem.MaxDirtLevel);
         _bloodstream.TryModifyBleedAmount(patient.Owner, 2f);
     }
 
@@ -197,7 +205,7 @@ public sealed partial class SurgerySystem
         if (!RollSuccess(patient, patient.Comp.Surgeon.Value, successChance))
             HandleFailure(patient, failureEffect);
 
-        _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { PiercingDamage, 2.5 } } }, true);
+        _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { PiercingDamage, 2.5 } } }, true);
     }
 
     private void PerformHealInternalDamage(Entity<OperatedComponent> patient, string? requiredPart, ProtoId<InternalDamagePrototype>? damageType, float successChance, List<SurgeryFailedType>? failureEffect)
@@ -242,7 +250,14 @@ public sealed partial class SurgerySystem
 
         if (TryComp<BloodstreamComponent>(patient, out var bloodstream) && !HasComp<SyntheticOperatedComponent>(patient))
         {
-            ApplyBloodToClothing(patient.Comp.Surgeon.Value, bloodstream.BloodReagent, 2f * SharedDirtSystem.MaxDirtLevel);
+            string? bloodReagentId = null;
+            if (bloodstream.BloodReferenceSolution.Contents.Count > 0)
+            {
+                var reagentQuantity = bloodstream.BloodReferenceSolution.Contents[0];
+                bloodReagentId = reagentQuantity.Reagent.Prototype;
+            }
+
+            ApplyBloodToClothing(patient.Comp.Surgeon.Value, bloodReagentId, 2f * SharedDirtSystem.MaxDirtLevel);
             _bloodstream.TryModifyBleedAmount(patient.Owner, 2f);
         }
     }
@@ -348,7 +363,14 @@ public sealed partial class SurgerySystem
 
         if (TryComp<BloodstreamComponent>(patient, out var bloodstream) && !HasComp<SyntheticOperatedComponent>(patient))
         {
-            ApplyBloodToClothing(patient.Comp.Surgeon.Value, bloodstream.BloodReagent, 2f * SharedDirtSystem.MaxDirtLevel);
+            string? bloodReagentId = null;
+            if (bloodstream.BloodReferenceSolution.Contents.Count > 0)
+            {
+                var reagentQuantity = bloodstream.BloodReferenceSolution.Contents[0];
+                bloodReagentId = reagentQuantity.Reagent.Prototype;
+            }
+
+            ApplyBloodToClothing(patient.Comp.Surgeon.Value, bloodReagentId, 2f * SharedDirtSystem.MaxDirtLevel);
             _bloodstream.TryModifyBleedAmount(patient.Owner, 2f);
         }
     }
@@ -468,7 +490,7 @@ public sealed partial class SurgerySystem
         if (patient.Comp.Surgeon == null || !HasComp<SyntheticOperatedComponent>(patient))
             return;
 
-        _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { BluntDamage, 2f } } }, true);
+        _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { BluntDamage, 2f } } }, true);
         if (TryComp<DamageableComponent>(patient, out var damageable) && damageable.TotalDamage >= 50)
             _audio.PlayPvs(new SoundCollectionSpecifier("sparks"), patient.Owner);
     }
@@ -478,7 +500,7 @@ public sealed partial class SurgerySystem
         if (patient.Comp.Surgeon == null || !HasComp<SyntheticOperatedComponent>(patient))
             return;
 
-        _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { BluntDamage, -2f } } }, true);
+        _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { BluntDamage, -2f } } }, true);
     }
 
     private void PerformPulse(Entity<OperatedComponent> patient)
@@ -495,7 +517,7 @@ public sealed partial class SurgerySystem
             return;
 
         var healAmount = new DamageSpecifier { DamageDict = { { BluntDamage, -5f }, { SlashDamage, -5f } } };
-        _damage.TryChangeDamage(patient, healAmount, true);
+        _damage.TryChangeDamage(patient.Owner, healAmount, true);
 
         if (HasComp<BloodstreamComponent>(patient))
             _bloodstream.TryModifyBleedAmount(patient.Owner, -10f);
@@ -515,7 +537,7 @@ public sealed partial class SurgerySystem
         if (patient.Comp.Surgeon == null || !HasComp<SyntheticOperatedComponent>(patient))
             return;
 
-        _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { SlashDamage, -2f } } }, true);
+        _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { SlashDamage, -2f } } }, true);
     }
 
     private void PerformMendWire(Entity<OperatedComponent> patient)
@@ -527,7 +549,8 @@ public sealed partial class SurgerySystem
         {
             DamageDict = { { BluntDamage, -6f }, { SlashDamage, -6f }, { PiercingDamage, -6f }, { HeatDamage, -6f } }
         };
-        _damage.TryChangeDamage(patient, healAmount, true);
+
+        _damage.TryChangeDamage(patient.Owner, healAmount, true);
     }
 
     private void PerformPry(Entity<OperatedComponent> patient)
@@ -535,7 +558,7 @@ public sealed partial class SurgerySystem
         if (patient.Comp.Surgeon == null || !HasComp<SyntheticOperatedComponent>(patient))
             return;
 
-        _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { BluntDamage, 5f } } }, true);
+        _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { BluntDamage, 5f } } }, true);
     }
 
     private void PerformAnchor(Entity<OperatedComponent> patient)
@@ -543,7 +566,7 @@ public sealed partial class SurgerySystem
         if (patient.Comp.Surgeon == null || !HasComp<SyntheticOperatedComponent>(patient))
             return;
 
-        _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { BluntDamage, -8f } } }, true);
+        _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { BluntDamage, -8f } } }, true);
     }
 
     private void PerformUnanchor(Entity<OperatedComponent> patient)
@@ -551,7 +574,7 @@ public sealed partial class SurgerySystem
         if (patient.Comp.Surgeon == null || !HasComp<SyntheticOperatedComponent>(patient))
             return;
 
-        _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { BluntDamage, 4f } } }, true);
+        _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { BluntDamage, 4f } } }, true);
         if (_random.Prob(0.3f))
             _audio.PlayPvs(new SoundCollectionSpecifier("sparks"), patient.Owner);
     }
@@ -659,8 +682,11 @@ public sealed partial class SurgerySystem
         };
     }
 
-    public void ApplyBloodToClothing(EntityUid surgeon, string bloodReagentId, float bloodAmount)
+    public void ApplyBloodToClothing(EntityUid surgeon, string? bloodReagentId, float bloodAmount)
     {
+        if (bloodReagentId == null)
+            return;
+
         var bloodSolution = new Solution();
         bloodSolution.AddReagent(bloodReagentId, FixedPoint2.New(bloodAmount));
 
@@ -679,19 +705,19 @@ public sealed partial class SurgerySystem
             case SurgeryFailedType.Empty:
                 return;
             case SurgeryFailedType.Cut:
-                _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { SlashDamage, 5 } } }, true);
+                _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { SlashDamage, 5 } } }, true);
                 break;
             case SurgeryFailedType.Bleeding:
                 TryAddInternalDamage(patient, "ArterialBleeding", bodyPart: bodyPart);
                 break;
             case SurgeryFailedType.Burn:
-                _damage.TryChangeDamage(patient, new DamageSpecifier { DamageDict = { { HeatDamage, 5 } } }, true);
+                _damage.TryChangeDamage(patient.Owner, new DamageSpecifier { DamageDict = { { HeatDamage, 5 } } }, true);
                 break;
             case SurgeryFailedType.Fracture:
                 TryAddInternalDamage(patient, "BoneFracture", bodyPart: bodyPart);
                 break;
             case SurgeryFailedType.Pain:
-                if (!HasComp<SleepingComponent>(patient) && !HasComp<PainNumbnessComponent>(patient) && !patient.Comp.OperatedPart && !_mobState.IsDead(patient) && !HasComp<SyntheticOperatedComponent>(patient))
+                if (!HasComp<SleepingComponent>(patient) && !HasComp<PainNumbnessStatusEffectComponent>(patient) && !patient.Comp.OperatedPart && !_mobState.IsDead(patient) && !HasComp<SyntheticOperatedComponent>(patient))
                     _chat.TryEmoteWithoutChat(patient, _proto.Index(Scream), true);
 
                 _jittering.DoJitter(patient, TimeSpan.FromSeconds(5), true);

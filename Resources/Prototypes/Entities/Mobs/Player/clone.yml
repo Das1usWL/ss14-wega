@@ -16,18 +16,18 @@
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
-  - Hemophilia
   - ImpairedMobility
   # - LegsParalyzed (you get healed)
   - LightweightDrunk
   - Muted
   - Narcolepsy
   - Pacified
-  - PainNumbness
   - Paracusia
   - PermanentBlindness
   - Snoring
   - Unrevivable
+  - Deafness # Corvax-Wega-Add
+  - NoirVision # Corvax-Wega-Add
   # accents
   - Accentless
   - BackwardsAccent
@@ -57,6 +57,12 @@
   - SpanishAccent
   - StutteringAccent
   - TTS # Corvax-TTS
+  - AphasiaAccent # Corvax-Wega-Add
+  - AuldImperialAccent # Corvax-Wega-Add
+  - ClownAccent # Corvax-Wega-Add
+  - LispAccent # Corvax-Wega-Add
+  - UnintelligibleAccent # Corvax-Wega-Add
+ 
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -101,6 +107,8 @@
 - type: cloningSettings
   id: ParadoxCloningSettings
   parent: [BaseClone, Antag]
+  components:
+  - Forensics # This is so hugging data is copied to the clone, so you can't hug metagame them
 
 # changeling identity copying
 - type: cloningSettings

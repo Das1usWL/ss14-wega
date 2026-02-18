@@ -178,6 +178,7 @@
       - Bloodpack
       - Gauze
       - Ointment
+      - Tourniquet
       - CigPack
       - PillCanister
       - Radio
@@ -185,7 +186,6 @@
       - SurgeryTool
       - Dropper
       components:
-      - Hypospray
       - Injector
       - Pill
       - HandLabeler
@@ -198,7 +198,7 @@
           - Bottle
       hypo:
         whitelist:
-          components:
+          tags:
           - Hypospray
       pill:
         whitelist:
@@ -248,12 +248,10 @@
   - type: Storage
     whitelist:
       tags:
-      # - PlantAnalyzer
       - PlantSampleTaker
       - BotanyShovel
       - BotanyHoe
       - BotanyHatchet
-      - PlantSampleTaker
       - PlantBGone
       - Bottle
       - Syringe
@@ -270,10 +268,6 @@
         whitelist:
           tags:
           - BotanyHatchet
-      # hydro:
-      #   whitelist:
-      #     tags:
-      #     - PlantAnalyzer # Dunno what to put here, should be aight.
       hoe:
         whitelist:
           tags:
@@ -380,7 +374,7 @@
   - type: Clothing
     sprite: Clothing/Belt/security.rsi
   - type: ExplosionResistance
-    damageCoefficient: 0.9
+    damageCoefficient: 0 # Corvax-Wega-Edit
   - type: Storage
     whitelist:
       tags:

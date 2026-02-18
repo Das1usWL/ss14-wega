@@ -6,6 +6,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
+    drawdepth: HighFloorObjects
     sprite: _Wega/Structures/Specific/bloodcult_structures.rsi
   - type: Clickable
   - type: InteractionOutline
@@ -28,7 +29,8 @@
   - type: Sprite
     state: offering
   - type: BloodRune
-    prototype: offering
+    runeType: Offering
+    desc: "offering-rune-desc"
 
 - type: entity
   id: BloodRuneTeleport
@@ -39,7 +41,8 @@
   - type: Sprite
     state: teleport
   - type: BloodRune
-    prototype: teleport
+    runeType: Teleport
+    desc: "teleport-rune-desc"
 
 - type: entity
   id: BloodRuneEmpowering
@@ -50,7 +53,12 @@
   - type: Sprite
     state: empowering
   - type: BloodRune
-    prototype: empowering
+    runeType: Empowering
+    desc: "empowering-rune-desc"
+  - type: UserInterface
+    interfaces:
+      enum.EmpoweringRuneUiKey.Key:
+        type: EmpoweringRuneBoundUserInterface
 
 - type: entity
   id: BloodRuneRevive
@@ -61,7 +69,8 @@
   - type: Sprite
     state: revive
   - type: BloodRune
-    prototype: revive
+    runeType: Revive
+    desc: "revive-rune-desc"
 
 - type: entity
   id: BloodRuneBarrier
@@ -95,7 +104,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: BloodRune
-    prototype: barrier
+    runeType: Barrier
+    desc: "barrier-rune-desc"
 
 - type: entity
   id: BloodRuneSummoning
@@ -106,7 +116,12 @@
   - type: Sprite
     state: summoning
   - type: BloodRune
-    prototype: summoning
+    runeType: Summoning
+    desc: "summoning-rune-desc"
+  - type: UserInterface
+    interfaces:
+      enum.SummoningRuneUiKey.Key:
+        type: SummoningRuneBoundUserInterface
 
 - type: entity
   id: BloodRuneBloodBoil
@@ -117,7 +132,8 @@
   - type: Sprite
     state: bloodboil
   - type: BloodRune
-    prototype: bloodboil
+    runeType: BloodBoil
+    desc: "bloodboil-rune-desc"
 
 - type: entity
   id: BloodRuneSpiritealm
@@ -128,7 +144,8 @@
   - type: Sprite
     state: spiritrealm
   - type: BloodRune
-    prototype: spiritrealm
+    runeType: SpiritRealm
+    desc: "spiritrealm-rune-desc"
 
 - type: entity
   id: BloodRuneRitualDimensionalRending
@@ -137,6 +154,7 @@
   description: ""
   components:
   - type: Sprite
+    drawdepth: HighFloorObjects
     sprite: _Wega/Structures/Specific/bloodcult_structures_large.rsi
     state: rune_large
   - type: BloodRitualDimensionalRending
@@ -193,6 +211,10 @@
         whitelist:
           tags:
           - SoulStone
+  - type: UserInterface
+    interfaces:
+      enum.BloodConstructUiKey.Key:
+        type: BloodConstructBoundUserInterface
 
 - type: entity
   id: BaseBloodCultStructure
@@ -206,6 +228,10 @@
   - type: InteractionOutline
   - type: BloodStructure
     fixture: fix1
+  - type: UserInterface
+    interfaces:
+      enum.BloodStructureUiKey.Key:
+        type: BloodStructureBoundUserInterface
 
 - type: entity
   parent: BaseBloodCultStructure
@@ -254,6 +280,7 @@
     - ClothingEyesZealotBlindfold
     - BloodCultVeilShifter
     - BloodCultShuttleCurse
+    - CardTarotNotEnchanted
   - type: Construction
     graph: BloodCultStructureArchivesGraph
     node: BloodCultStructureArchives
@@ -379,7 +406,6 @@
   - type: BloodPylon
   - type: BloodStructure
     fixture: fix1
-    canInteract: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

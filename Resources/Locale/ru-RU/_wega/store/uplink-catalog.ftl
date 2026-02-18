@@ -36,3 +36,7 @@ uplink-syndicate-camera-name = Синдикатовский визор набл�
 uplink-syndicate-camera-desc = Визор, который позволяет наблюдать за бодикамерами СБ.
 uplink-syndie-player-name = Плеер синдиката
 uplink-syndie-player-desc = Позволяет разбавить рутинную резню своей любимой музыкой.
+uplink-syndie-pouch-name = Усиленный карманный подсумок синдиката
+uplink-syndie-pouch-desc = Вместительный подсумок с усиленной защитой от взрывов. Всё, что нужно агенту, останется при нём.
+uplink-syndie-dice-of-fate-name = Кость судьбы
+uplink-syndie-dice-of-fate-desc = Неизвестной таинственности и силы артефакт, который способен кардинально изменить судьбу кинувшего его. Однако это невероятный риск!

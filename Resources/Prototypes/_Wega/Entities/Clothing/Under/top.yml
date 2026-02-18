@@ -42,6 +42,17 @@
 
 - type: entity
   parent: ClothingUnderTopBase
+  id: ClothingUnderTopBraSecurity
+  name: security bra
+  description: "Standard service safety bra. Worn under a body armor, but provides its own protection."
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/Under/Top/security.rsi
+  - type: Clothing
+    sprite: _Wega/Clothing/Under/Top/security.rsi
+
+- type: entity
+  parent: ClothingUnderTopBase
   id: ClothingUnderTopBraAssblastusa
   name: bra
   description: "An element of lingerie that supports the breasts and creates comfort. It is made of soft materials and has various details."
@@ -250,6 +261,28 @@
     sprite: _Wega/Clothing/Under/Top/Head/captain.rsi
   - type: Clothing
     sprite: _Wega/Clothing/Under/Top/Head/captain.rsi
+
+- type: entity
+  parent: ClothingUnderTopBase
+  id: ClothingUnderTopBraCapS
+  name: sherif bra
+  description: "An element of lingerie that supports the breasts and creates comfort. It is made of soft materials and has various details."
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/Under/Top/Head/captain_green.rsi
+  - type: Clothing
+    sprite: _Wega/Clothing/Under/Top/Head/captain_green.rsi
+
+- type: entity
+  parent: ClothingUnderTopBase
+  id: ClothingUnderTopBraCapW
+  name: white captain bra
+  description: "An element of lingerie that supports the breasts and creates comfort. It is made of soft materials and has various details."
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/Under/Top/Head/captain_white.rsi
+  - type: Clothing
+    sprite: _Wega/Clothing/Under/Top/Head/captain_white.rsi
 
 - type: entity
   parent: ClothingUnderTopBase

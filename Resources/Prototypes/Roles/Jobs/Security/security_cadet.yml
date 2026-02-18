@@ -6,10 +6,10 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10h # Corvax-RoleTime
-    # - !type:DepartmentTimeRequirement Corvax-Wega
-    #   department: Security
-    #   time: 20h # Corvax-RoleTime 5
-    #   inverted: true # stop playing intern if you're good at security!
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 20h # Corvax-RoleTime 5
+      inverted: true # stop playing intern if you're good at security!
     - !type:TraitsRequirement #Corvax-TraitsRequirement
       inverted: true
       traits:
@@ -22,11 +22,8 @@
   - Security
   - Brig
   - Maintenance
-  - Service
   - External
   - Cryogenics
-  - GenpopEnter
-  - GenpopLeave
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

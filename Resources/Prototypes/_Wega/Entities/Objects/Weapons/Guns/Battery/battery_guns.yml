@@ -3,6 +3,7 @@
   id: WeaponBlueLaserPistol
   name: blue laser pistol
   description: "Standard officer 'Blue Shield' laser with mode selector. Has non-lethal fire options for suppressing threats and lethal fire for neutralization. Chrome finish and ergonomic grip ensure accuracy and reliability in critical situations."
+  suffix: Pistol
   components:
   - type: Sprite
     sprite: _Wega/Objects/Weapons/Guns/Battery/bluerantiquelasergun.rsi
@@ -27,7 +28,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
   - type: BatteryWeaponFireModes
@@ -65,6 +66,7 @@
   id: WeaponDominator
   name: laser pistol 'Dominator'
   description: A high-tech weapon created by the environmental organization Sibyl System, specifically designed to fight crime.
+  suffix: Pistol
   components:
   - type: Sprite
     sprite: _Wega/Objects/Weapons/Guns/Battery/dominator.rsi
@@ -89,7 +91,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: BulletLaserAdvanced
     fireCost: 100
   - type: BatteryWeaponFireModes

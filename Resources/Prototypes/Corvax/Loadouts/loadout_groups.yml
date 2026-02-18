@@ -49,6 +49,17 @@
   - JumpskirtColorDarkBlue
   - JumpsuitColorDarkGreen
   - JumpskirtColorDarkGreen
+  - ClothingUniformJumpskirtGreenElegantDress
+  - ClothingUniformJumpskirtRedElegantDress
+  - ClothingUniformJumpskirtBlueElegantDress
+  - ClothingUniformJumpskirtPurpleElegantDress
+  - ClothingUniformJumpskirtBlackElegantDress
+  - ClothingUniformJumpskirtCyanStripedDress
+  - ClothingUniformJumpskirtGreenStripedDress
+  - ClothingUniformJumpskirtRedStripedDress
+  - ClothingUniformJumpskirtOrangeStripedDress
+  - ClothingUniformJumpskirtPinkStripedDress
+  - ClothingUniformJumpskirtYellowOldDress
   - JumpsuitColorTeal
   - JumpskirtColorTeal
   - JumpsuitCasualBlue
@@ -58,8 +69,8 @@
   - JumpsuitCasualRed
   - JumpskirtCasualRed
   - JumpsuitCasualGreen
-  - JumpskirtCasualGreen 
-  - JumpskirtTurtleneckAquamarine   
+  - JumpskirtCasualGreen
+  - JumpskirtTurtleneckAquamarine
   - JumpsuitTurtleneckAquamarine
   - JumpskirtTurtleneckWhite
   - JumpsuitTurtleneckWhite
@@ -93,6 +104,11 @@
   - JumpsuitTurtleneckWhiteBlackSleeveless
   - JumpsuitTurtleneckWhiteSleeveless
   - JumpskirtTurtleneckWhiteSleeveless
+  - ClothingUniformJumpskirtPurpleTurtleneckDress
+  - ClothingUniformJumpskirtBlueTurtleneckDress
+  - ClothingUniformJumpskirtYellowTurtleneckDress
+  - ClothingUniformJumpskirtGreenTurtleneckDress
+  - ClothingUniformJumpskirtRedTurtleneckDress
   - ClothingUniformJumpsuitSecBlueOJ
   - ClothingUniformJumpskirtDetectiveGrey
   - ClothingUniformJumpsuitDetectiveGrey
@@ -227,6 +243,17 @@
   - JumpskirtColorDarkBlue
   - JumpsuitColorDarkGreen
   - JumpskirtColorDarkGreen
+  - ClothingUniformJumpskirtGreenElegantDress
+  - ClothingUniformJumpskirtRedElegantDress
+  - ClothingUniformJumpskirtBlueElegantDress
+  - ClothingUniformJumpskirtPurpleElegantDress
+  - ClothingUniformJumpskirtBlackElegantDress
+  - ClothingUniformJumpskirtCyanStripedDress
+  - ClothingUniformJumpskirtGreenStripedDress
+  - ClothingUniformJumpskirtRedStripedDress
+  - ClothingUniformJumpskirtOrangeStripedDress
+  - ClothingUniformJumpskirtPinkStripedDress
+  - ClothingUniformJumpskirtYellowOldDress
   - JumpsuitColorTeal
   - JumpskirtColorTeal
   - JumpsuitCasualBlue
@@ -236,8 +263,8 @@
   - JumpsuitCasualRed
   - JumpskirtCasualRed
   - JumpsuitCasualGreen
-  - JumpskirtCasualGreen 
-  - JumpskirtTurtleneckAquamarine   
+  - JumpskirtCasualGreen
+  - JumpskirtTurtleneckAquamarine
   - JumpsuitTurtleneckAquamarine
   - JumpskirtTurtleneckWhite
   - JumpsuitTurtleneckWhite
@@ -271,6 +298,11 @@
   - JumpsuitTurtleneckWhiteBlackSleeveless
   - JumpsuitTurtleneckWhiteSleeveless
   - JumpskirtTurtleneckWhiteSleeveless
+  - ClothingUniformJumpskirtPurpleTurtleneckDress
+  - ClothingUniformJumpskirtBlueTurtleneckDress
+  - ClothingUniformJumpskirtYellowTurtleneckDress
+  - ClothingUniformJumpskirtGreenTurtleneckDress
+  - ClothingUniformJumpskirtRedTurtleneckDress
   - ClothingUniformJumpsuitSecBlueOJ
   - ClothingUniformJumpskirtDetectiveGrey
   - ClothingUniformJumpsuitDetectiveGrey
@@ -399,9 +431,6 @@
   - JumpsuitTurtleneckBlack
   - JumpskirtTurtleneckBlackSleeveless
   - JumpsuitTurtleneckBlackSleeveless
-  - ClothingUniformTopColorRed
-  - ClothingUniformTopColorBlack
-  - ClothingUniformTopicCool
 # Corvax-Wega-add-end
 
 - type: loadoutGroup
@@ -431,9 +460,6 @@
   - JumpsuitTurtleneckBlack
   - JumpskirtTurtleneckBlackSleeveless
   - JumpsuitTurtleneckBlackSleeveless
-  - ClothingUniformTopColorRed
-  - ClothingUniformTopColorBlack
-  - ClothingUniformTopicCool
 # Corvax-Wega-add-end
 
 - type: loadoutGroup
@@ -494,7 +520,7 @@
   - SeniorPhysicianJumpsuit
   - SeniorPhysicianJumpskirt
 # Corvax-Wega-add-start
-  - JumpskirtTurtleneckAquamarine   
+  - JumpskirtTurtleneckAquamarine
   - JumpsuitTurtleneckAquamarine
   - JumpskirtTurtleneckWhite
   - JumpsuitTurtleneckWhite
@@ -504,6 +530,9 @@
   - JumpsuitTurtleneckAzure
   - JumpskirtTurtleneckBlue
   - JumpsuitTurtleneckBlue
+  - ClothingUniformJumpskirtCyanStripedDress
+  - ClothingUniformJumpskirtBlueElegantDress
+  - ClothingUniformJumpskirtBlueTurtleneckDress
 # Corvax-Wega-add-end
 
 - type: loadoutGroup

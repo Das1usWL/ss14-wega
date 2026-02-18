@@ -9,6 +9,7 @@
   - type: Sharp
   - type: Execution
     doAfterDuration: 4.0
+    canGunExecute: false # Corvax-Wega-Suicide
   - type: MeleeWeapon
     wideAnimationRotation: -135
   - type: Sprite
@@ -29,9 +30,6 @@
   id: Cutlass
   description: A wickedly curved blade, often seen in the hands of space pirates.
   components:
-  - type: Tag
-    tags:
-    - Machete
   - type: Sprite
     sprite: Objects/Weapons/Melee/cutlass.rsi
   - type: MeleeWeapon
@@ -54,9 +52,6 @@
   id: Machete
   description: A large, vicious looking blade.
   components:
-  - type: Tag
-    tags:
-    - Machete
   - type: Sprite
     sprite: Objects/Weapons/Melee/machete.rsi
   - type: MeleeWeapon
@@ -116,9 +111,6 @@
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
-  - type: Tag
-    tags:
-    - Katana
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana.rsi
   - type: MeleeWeapon
@@ -201,7 +193,7 @@
   # Corvax-Wega-NullRod-start
   - type: NullRod
   - type: Reflect
-    reflectProb: 0.3
+    reflectProb: 0.1
     spread: 90
   # Corvax-Wega-NullRod-end
   - type: Clothing

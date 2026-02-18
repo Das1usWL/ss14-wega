@@ -5,11 +5,16 @@ loadout-group-socks = Носки
 loadout-group-base-shoes = Обувь, базовая
 
 # Heads
+loadout-group-sponsor-head = Спонсор, голова
+
+# Neck
+loadout-group-sponsor-neck = Спонсор, шея
 
 # Command
 loadout-group-captain-top = Капитан, верхнее белье
 loadout-group-captain-bottom = Капитан, нижнее белье
 loadout-group-captain-socks = Капитан, носки
+loadout-group-capitan-gloves = Капитан, перчатки
 loadout-group-blue-shield-head = Офицер "Синий Щит", голова
 loadout-group-blue-shield-jumpsuit = Офицер "Синий Щит", комбинезон
 loadout-group-blue-shield-backpack = Офицер "Синий Щит", рюкзак
@@ -22,6 +27,7 @@ loadout-group-hop-bottom = Глава персонала, нижнее бель�
 loadout-group-hop-socks = Глава персонала, носки
 # Service
 loadout-group-barber-outerclothing = Барбер, верхняя одежда
+loadout-group-clown-mask = Клоун, маска
 # Cargo
 loadout-group-quartermaster-top = Квартирмейстер, верхнее белье
 loadout-group-quartermaster-bottom = Квартирмейстер, нижнее белье

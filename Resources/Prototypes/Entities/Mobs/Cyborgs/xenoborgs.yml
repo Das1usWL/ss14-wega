@@ -22,7 +22,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 7
+    maxModules: 4 #Corvax-Wega-add
     hasMindState: xenoborg_engi_e
     noMindState: xenoborg_engi_e_r
     moduleWhitelist:
@@ -37,16 +37,23 @@
       - MMIFilled
       borg_module:
       - XenoborgModuleBasic
-      - BorgModuleAdvancedTool
-      - BorgModuleConstruction
-      - BorgModuleRCD
-      - BorgModuleCable
+# Corvax-Wega-robots-start
+      # - BorgModuleAdvancedTool
+      # - BorgModuleConstruction
+      # - BorgModuleRCD
+      # - BorgModuleRCD
       - XenoborgModuleAccessBreaker
-      - XenoborgModuleFireExtinguisher
+      - BorgModuleXenoConstruction
+      # - BorgModuleCable
+# Corvax-Wega-robots-end
+      # - XenoborgModuleAccessBreaker  # Corvax-Wega-robots
+      # - XenoborgModuleFireExtinguisher # Corvax-Wega-robots
+  - type: ShowElectrocutionHUD
   - type: ShowHealthBars
     damageContainers:
     - Inorganic
     - Silicon
+    - Android #Corvax-Wega-android-health-display
   - type: ItemSlots
     slots:
       cell_slot:
@@ -87,12 +94,13 @@
   - type: MovementSpeedModifier # slower
     baseWalkSpeed : 1.2
     baseSprintSpeed : 2.2
+  - type: MovementAlwaysTouching # it flies in space by pure will power
   - type: FlashImmunity
   - type: MobThresholds # tankier
     thresholds:
       0: Alive
       250: Critical
-      500: Dead
+      750: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
@@ -117,14 +125,18 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PinpointerMothershipPiece: # drop a piece of core pinpointer upon being destructed (4 pieces to make a core pinpointer)
+            min: 1
+            max: 1
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
+        - borg_module
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Repairable
-    doAfterDelay: 25 # more HP, more time to heal
   - type: ContainerFill
     containers:
       borg_brain:
@@ -133,12 +145,17 @@
       - XenoborgModuleBasic
       - XenoborgModuleTool
       - XenoborgModuleLaser
-      - XenoborgModuleJammer
+      - XenoborgHoloprojector # XenoborgModuleJammer Corvax-Wega-Add
   - type: ItemSlots
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
+# Corvax-Wega-start
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+# Corvax-Wega-end
 
 - type: entity
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
@@ -166,6 +183,7 @@
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
       collection: FootstepHoverXenoborg
+  - type: MovementAlwaysTouching # it flies in space with tiny thrusters
   - type: FlashImmunity
   - type: BorgChassis
     maxModules: 4
@@ -220,7 +238,7 @@
     footstepSoundCollection:
       collection: FootstepHoverXenoborg
   - type: BorgChassis
-    maxModules: 5
+    maxModules: 4 #Corvax-Wega-add
     hasMindState: xenoborg_stealth_e
     noMindState: xenoborg_stealth_e_r
     moduleWhitelist:
@@ -239,7 +257,7 @@
       - XenoborgModuleBasic
       - XenoborgModuleTool
       - XenoborgModuleHypo
-      - XenoborgModuleChameleonProjector
+      # - XenoborgModuleChameleonProjector Corvax-Wega
       - XenoborgModuleCloakDevice
   - type: ItemSlots
     slots:
@@ -260,11 +278,17 @@
       - MMI
       borg_module:
       - XenoborgModuleBasic
-      - BorgModuleAdvancedTool
-      - BorgModuleConstruction
-      - BorgModuleRCD
-      - BorgModuleCable
+# Corvax-Wega-robots-start
+      # - BorgModuleAdvancedTool
+      # - BorgModuleConstruction
+      # - BorgModuleRCD
+      # - BorgModuleRCD
       - XenoborgModuleAccessBreaker
+      - BorgModuleXenoConstruction
+      # - BorgModuleCable
+# Corvax-Wega-robots-end
+      # - XenoborgModuleAccessBreaker  # Corvax-Wega-robots
+      # - XenoborgModuleFireExtinguisher # Corvax-Wega-robots
       - XenoborgModuleFireExtinguisher
   - type: ItemSlots
     slots:
@@ -285,7 +309,7 @@
       - XenoborgModuleBasic
       - XenoborgModuleTool
       - XenoborgModuleLaser
-      - XenoborgModuleJammer
+      - XenoborgHoloprojector # XenoborgModuleJammer Corvax-Wega-Add
   - type: ItemSlots
     slots:
       cell_slot:
@@ -325,7 +349,7 @@
       - XenoborgModuleBasic
       - XenoborgModuleTool
       - XenoborgModuleHypo
-      - XenoborgModuleChameleonProjector
+      # - XenoborgModuleChameleonProjector Corvax-Wega
       - XenoborgModuleCloakDevice
   - type: ItemSlots
     slots:

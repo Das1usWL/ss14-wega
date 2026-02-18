@@ -208,13 +208,16 @@
   parent: [ ClothingBackpack, BaseCentcommContraband ]
   id: ClothingBackpackERTLeader
   name: ERT leader backpack
-  description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by the Leader of an Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
     grid:
-    - 0,0,10,3
+    - 0,0,9,5 # Corvax-wega-add
+    - 8,1,9,5 # Corvax-wega-add
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -282,7 +285,7 @@
 
 #Syndicate
 - type: entity
-  parent: [ClothingBackpack, BaseSyndicateContraband]
+  parent: [ClothingBackpack, BaseSyndicateContraband, BaseChameleon] # Corvax-wega-add
   id: ClothingBackpackSyndicate
   name: syndicate backpack
   description:
@@ -293,10 +296,21 @@
     damageCoefficient: 0.1
   - type: Storage
     grid:
-    - 0,0,7,3
-    - 8,1,8,3
+    - 0,0,9,5 # Corvax-wega-add
+    - 8,1,9,5 # Corvax-wega-add
   - type: StaticPrice
     price: 1000
+# Corvax-wega-start
+  - type: ChameleonClothing
+    slot: [back]
+    default: ClothingBackpackSyndicate
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+# Corvax-wega-end
 
 #Special
 - type: entity
@@ -362,7 +376,7 @@
   id: ClothingBackpackDebug
   name: wackpack
   description: What the fuck is this?
-  suffix: Debug
+  suffix: DEBUG
   components:
   - type: Storage
     grid:
@@ -378,7 +392,7 @@
   id: ClothingBackpackDebug2
   name: big wackpack
   description: What the fuck is this?
-  suffix: Debug
+  suffix: DEBUG
   components:
   - type: Storage
     grid:
@@ -389,7 +403,7 @@
   id: ClothingBackpackDebug3
   name: gay wackpack
   description: What the fuck is this?
-  suffix: Debug
+  suffix: DEBUG
   components:
   - type: Storage
     grid:
@@ -410,7 +424,7 @@
   id: ClothingBackpackDebug4
   name: offset wackpack
   description: What the fuck is this?
-  suffix: Debug
+  suffix: DEBUG
   components:
   - type: Storage
     grid:

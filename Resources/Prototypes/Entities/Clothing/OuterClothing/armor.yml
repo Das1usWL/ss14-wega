@@ -310,7 +310,6 @@
     maxCharge: 600
     startingCharge: 600
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 2
   - type: Item
     size: Normal
@@ -360,6 +359,7 @@
         Piercing: 0.5
         Heat: 0.5
   - type: GroupExamine
+  - type: BloodShieldActivaeble # Corvax-Wega-Blood-Cult
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]

@@ -23,14 +23,14 @@
     - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
     - map: [ "enum.HumanoidVisualLayers.LFoot" ]
     - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
     - map: [ "enum.HumanoidVisualLayers.Special" ]
     - map: [ "socks" ]
     - map: [ "underwearbottom" ]
     - map: [ "underweartop" ]
     - map: [ "jumpsuit" ]
     - map: [ "anal" ]
-    - map: [ "enum.HumanoidVisualLayers.LHand" ]
-    - map: [ "enum.HumanoidVisualLayers.RHand" ]
     # Corvax-Wega-end
     - map: [ "gloves" ]
     - map: [ "shoes" ]
@@ -66,7 +66,7 @@
   # TODO, normally make light switching
   - type: GenericVisualizer
     visuals:
-      enum.UnpoweredFlashlightVisuals.LightOn:
+      enum.AndroidVisuals.Light:
         AndroidLeds-leds:
           True: { shader: unshaded }
           False: { shader: shaded }
@@ -76,10 +76,28 @@
         AndroidLedsStripes-leds_stripes:
           True: { shader: unshaded }
           False: { shader: shaded }
+        AndroidTempleLed-temple_led:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        AndroidTorsoSpine-body_spine_led:
+          True: { shader: unshaded }
+          False: { shader: shaded }
         AndroidCatEars-ears_cat_led:
           True: { shader: unshaded }
           False: { shader: shaded }
         AndroidCatTail-cat_tail_led:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        AndroidHeadBulbs-head_bulbs:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        AndroidOldHead-hare_lit:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        AndroidIpcHead-ipc_lit:
+          True: { shader: unshaded, visible: true }
+          False: { shader: shaded, visible: false }
+        AndroidScreenHead-screen_lit:
           True: { shader: unshaded }
           False: { shader: shaded }
   - type: WiresVisuals
@@ -92,6 +110,8 @@
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    allowedEmotes:
+      - LPCmoan
     speechVerb: Robotic
     speechSounds: Borg
   - type: Vocal
@@ -134,10 +154,11 @@
         Asphyxiation: -10
   - type: AtmosExposed
   - type: Temperature
-    heatDamageThreshold: 403.15
-    coldDamageThreshold: 213.15
     currentTemperature: 310.15
     specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 403.15
+    coldDamageThreshold: 213.15
     coldDamage:
       types:
         Cold: 0.1
@@ -175,8 +196,12 @@
   - type: WiresPanel
   - type: LockedWiresPanel
   - type: Lock
+    unlockOnClick: false
   - type: Bloodstream
-    bloodReagent: Tyrium
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Tyrium
+        Quantity: 300
     bleedReductionAmount: 0
     bloodRefreshAmount: 0
   - type: Android
@@ -202,6 +227,9 @@
       methods: [ Touch ]
       effects:
       - !type:Electrocute
+        shockDamage: 0.5
+        minScale: 20
+        electrocuteTime: 0.5
   - type: Operated
     raceGraph: AndroidSurgery
     limbLossChance: 1.75

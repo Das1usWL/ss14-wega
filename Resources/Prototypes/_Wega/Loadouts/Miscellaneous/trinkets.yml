@@ -103,3 +103,33 @@
     back:
     - PlushieSharkBlue
   groupBy: "wegatoyload"
+
+#region New Year Gear
+- type: loadout
+  id: HatNewYearRed
+  storage:
+    back:
+    - ClothingHeadHatNewYearRed
+  groupBy: "weganewyearhats"
+
+- type: loadout
+  id: HatNewYearBlue
+  storage:
+    back:
+    - ClothingHeadHatNewYearBlue
+  groupBy: "weganewyearhats"
+
+- type: loadout
+  id: HatNewYearCyan
+  storage:
+    back:
+    - ClothingHeadHatNewYearCyan
+  groupBy: "weganewyearhats"
+
+- type: loadout
+  id: HatNewYearWega
+  storage:
+    back:
+    - ClothingHeadHatNewYearWega
+  groupBy: "weganewyearhats"
+#endregion

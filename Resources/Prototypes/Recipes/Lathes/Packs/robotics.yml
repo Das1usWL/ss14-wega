@@ -23,6 +23,14 @@
   - BorgModuleCommonPen
   - BorgModuleCommonFight
   - BorgModuleCommonPickaxe
+  - BorgModuleCommonSpeed
+  # - BorgModuleCommonMagBoots надо будет как-то поменять его
+  - BorgModuleCommonRepeir
+  - BorgModuleCommonCandy
+  - BorgModuleCleaningCommon
+  - BorgModuleMusique
+  - BorgModuleAnomaly
+  - BorgModuleArtifact
  # Corvax-Wega-end
 
 - type: latheRecipePack
@@ -46,6 +54,9 @@
   - ArmSyntheticPry
   - ArmSyntheticDefib
   - ArmSyntheticProtoKinetic
+  - ArmSyntheticCharger
+  - LegSyntheticMagboots
+  - LegSyntheticJump
   # Corvax-Wega-Android-End
 
 - type: latheRecipePack
@@ -54,15 +65,17 @@
   - BorgModuleAdvancedCleaning
   - BorgModuleAdvancedTool
   - BorgModuleAdvancedClowning
-  - BorgModuleAdvancedChemical
+  - BorgModuleAdvancedTopical
   - BorgModuleAdvancedMining
  # Corvax-Wega-Start
   - BorgModuleSurgery
+  - BorgModuleLethal
   - BorgModuleKinetic
   - BorgModuleGardening
-  - BorgModuleHarvesting
-  - BorgModuleMusique
   - BorgModuleClowning
+  - BorgModuleSheild
+  - BorgModuleGranader
+  - BorgModuleCommonHand
  # Corvax-Wega-end
 
 - type: latheRecipePack

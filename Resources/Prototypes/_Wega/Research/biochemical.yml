@@ -79,11 +79,12 @@
   tier: 2
   cost: 12500
   recipeUnlocks:
-  - BorgModuleAdvancedChemical
+  - BorgModuleAdvancedTopical
+  - AdvancedJetInjector
   - Hynospray
-  - BorgModuleSurgery
   - DefibrillatorCompact
   - ArmSyntheticDefib
+  - PouchMedical
 
 - type: technology
   id: ChemicalDispensary
@@ -128,6 +129,7 @@
   - Hemrevein
   - Bonesaw
   - ScalpelLaser
+  - BorgModuleSurgery
 
 # Tier 3
 

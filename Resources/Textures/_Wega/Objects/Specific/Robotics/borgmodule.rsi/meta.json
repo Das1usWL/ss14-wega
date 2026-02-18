@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). layered inhands by mubururu_ (github), icon-chem.png & icon-mining-adv.png created by mubururu_ (github), Xenoborg modules sprites by Samuka-C (github),surgery and kinetic by <@500744677352407051>",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). layered inhands by mubururu_ (github), icon-chem.png & icon-mining-adv.png created by mubururu_ (github), Xenoborg modules sprites by Samuka-C (github),surgery and kinetic by <@500744677352407051>, icon-xenoborg-holowall by github Samuka-C>",
     "size": {
         "x": 32,
         "y": 32
@@ -23,6 +23,18 @@
             "name": "cargo"
         },
         {
+            "name": "command"
+        },
+        {
+            "name": "security"
+        },
+        {
+            "name": "xenoborg_generic"
+        },
+        {
+            "name": "xenoborg_heavy"
+        },
+        {
             "name": "icon-kinetic"
         },
         {
@@ -35,7 +47,58 @@
             "name": "icon-fight-common"
         },
         {
+            "name": "icon-repeir"
+        },
+        {
             "name": "icon-treatment-common"
+        },
+        {
+            "name": "icon-candy"
+        },
+        {
+            "name": "icon-hand"
+        },
+        {
+            "name": "icon-sheild"
+        },
+        {
+            "name": "icon-gun"
+        },
+        {
+            "name": "icon-grenade"
+        },
+        {
+            "name": "icon-dec"
+        },
+        {
+            "name": "icon-dis"
+        },
+        {
+            "name": "icon-speed"
+        },
+        {
+            "name": "icon-magboots"
+        },
+        {
+            "name": "icon-cook-rare"
+        },
+        {
+            "name": "icon-gun-rare"
+        },
+        {
+            "name": "icon-mining-rare"
+        },
+        {
+            "name": "icon-mop-rare"
+        },
+        {
+            "name": "icon-rcd-rare"
+        },
+        {
+            "name": "icon-doc-rare"
+        },
+        {
+            "name": "icon-xenoborg-holowall"
         },
         {
             "name": "base-icon-inhand-left",

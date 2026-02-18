@@ -48,9 +48,13 @@
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
   - type: SentienceTarget
+    weight: 0.050 # Corvax-Wega-Add
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 50
   - type: ReplacementAccent
     accent: mouse
   - type: MeleeWeapon
@@ -112,7 +116,7 @@
       0: Alive
       10: Dead
   - type: Stamina
-    critThreshold: 10
+    baseCritThreshold: 10
     animationThreshold: 1
   - type: DamageStateVisuals
     states:
@@ -140,8 +144,10 @@
     - Bee
     - Trash
   - type: Bloodstream
-    bloodReagent: InsectBlood
-    bloodMaxVolume: 0.1
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 0.1
   - type: MobPrice
     price: 50
   - type: NPCRetaliation
@@ -187,7 +193,10 @@
     factions:
     - SimpleHostile
   - type: Bloodstream
-    bloodMaxVolume: 0.1
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 0.1
   - type: ZombieImmune
 
 
@@ -261,7 +270,10 @@
     interactSuccessSound:
       path: /Audio/Animals/chicken_cluck_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
@@ -269,6 +281,7 @@
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
+    weight: 0.050 # Corvax-Wega-Add
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
     factions:
@@ -388,8 +401,10 @@
       Dead:
         Base: cockroach_dead
   - type: Bloodstream
-    bloodReagent: InsectBlood
-    bloodMaxVolume: 20
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 20
   - type: Edible
   - type: FlavorProfile
     flavors:
@@ -441,7 +456,12 @@
     damage:
       types:
         Piercing: 0
+  # Corvax-Wega-Add-start
   - type: VentCrawler # Corvax-Wega-VentCrawling
+  - type: SentienceTarget
+    weight: 0.050
+    flavorKind: station-event-random-sentience-flavor-organic
+  # Corvax-Wega-Add-end
 
 - type: entity
   name: glockroach
@@ -553,7 +573,10 @@
     damageContainer: Biological
     damageModifierSet: Moth
   - type: Bloodstream
-    bloodReagent: InsectBlood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 20
   - type: Respirator
     damage:
       types:
@@ -710,7 +733,10 @@
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
@@ -718,6 +744,7 @@
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
+    weight: 0.050 # Corvax-Wega-Add
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
     factions:
@@ -838,8 +865,10 @@
     tags:
     - Trash
   - type: Bloodstream
-    bloodReagent: InsectBlood
-    bloodMaxVolume: 0.1
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 0.1
   - type: MobPrice
     price: 50
   - type: Destructible
@@ -869,6 +898,11 @@
     tags:
     - DoorBumpOpener
     - Cow
+  # Corvax-Wega-Add-start
+  - type: SentienceTarget
+    weight: 0.050
+    flavorKind: station-event-random-sentience-flavor-organic
+  # Corvax-Wega-Add-end
   - type: Reproductive
     partnerWhitelist:
       tags:
@@ -995,8 +1029,10 @@
   - type: ReplacementAccent
     accent: crab
   - type: Bloodstream
-    bloodMaxVolume: 50
-    bloodReagent: CopperBlood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 50
   - type: Tag
     tags:
     - VimPilot
@@ -1154,7 +1190,10 @@
     interactSuccessSound:
       path: /Audio/Animals/goose_honk.ogg
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: NpcFactionMember
     factions:
     - Passive
@@ -1196,7 +1235,10 @@
     - id: FoodMeat
       amount: 4
   - type: Bloodstream
-    bloodMaxVolume: 300
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 300
     # if you fuck with the gorilla he will harambe you
   - type: MeleeWeapon
     soundHit:
@@ -1448,6 +1490,7 @@
       effects:
       - !type:WashCreamPie
   - type: Crawler
+  - type: StatusIcon
   - type: VentCrawler # Corvax-Wega-VentCrawling
   # Corvax-Wega-Surgery-start
   - type: Operated
@@ -1474,6 +1517,7 @@
     speechVerb: Monkey
   - type: MonkeyAccent
   - type: SentienceTarget
+    weight: 0.050 # Corvax-Wega-Add
     flavorKind: station-event-random-sentience-flavor-primate
   - type: AlwaysRevolutionaryConvertible
   - type: GhostRole
@@ -1488,8 +1532,7 @@
       types:
         Blunt: 5
         Piercing: 4
-      groups:
-        Burn: 3
+        Heat: 3
     catchingFailDamage:
       types:
         Blunt: 1
@@ -1512,6 +1555,7 @@
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
+    weight: 0.050 # Corvax-Wega-Add
     flavorKind: station-event-random-sentience-flavor-primate
   - type: Speech
     speechSounds: Monkey
@@ -1534,6 +1578,12 @@
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
+  # Corvax-Wega-Genetics-start
+  - type: DnaModifier
+    upper: MobHumanSyndiMonkey
+    lowest: MobBaseSyndicateMonkey
+  # Corvax-Wega-Genetics-end
+
 
 - type: entity
   id: MobMonkeySyndicateAgent
@@ -1543,6 +1593,7 @@
     # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
+
 
 - type: entity
   id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
@@ -1603,10 +1654,11 @@
         Slash: 5
         Piercing: 4
   - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 285
     currentTemperature: 310.15
     specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1656,6 +1708,7 @@
   - type: AlwaysRevolutionaryConvertible
   - type: GhostTakeoverAvailable
   - type: SentienceTarget
+    weight: 0.050 # Corvax-Wega-Add
     flavorKind: station-event-random-sentience-flavor-kobold
   - type: GhostRole
     prob: 0.05
@@ -1680,8 +1733,7 @@
       types:
         Blunt: 2
         Piercing: 7
-      groups:
-        Burn: 3
+        Heat: 3
     catchingFailDamage:
       types:
         Blunt: 1
@@ -1891,7 +1943,10 @@
       types:
         Piercing: 0
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 50
   - type: CanEscapeInventory
    # Corvax-Wega-Disease-start
   - type: DiseaseCarrier #The other class lab animal and disease vector
@@ -2034,9 +2089,13 @@
     energy: 5
     netsync: false
   - type: RadiationSource
-    intensity: 0.3
+    intensity: 0.5
+    slope: 0.3
   - type: Bloodstream
-    bloodReagent: UnstableMutagen
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: UnstableMutagen
+        Quantity: 50
   - type: SolutionContainerManager
     solutions:
       food:
@@ -2102,7 +2161,10 @@
     interactSuccessSound:
       path: /Audio/Animals/lizard_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 150
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 150
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
@@ -2156,7 +2218,10 @@
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 50
   - type: VentCrawler # Corvax-Wega-VentCrawling
 
 - type: entity
@@ -2213,7 +2278,10 @@
     interactSuccessSound:
       path: /Audio/Animals/frog_ribbit.ogg
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 50
   - type: Tag
     tags:
     - VimPilot
@@ -2305,7 +2373,10 @@
     interactSuccessSound:
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 50
   # Corvax-Wega-Genetics-start
   - type: DnaModifier
     upper: MobHarpy
@@ -2368,10 +2439,11 @@
     factions:
     - Passive
   - type: Temperature
-    heatDamageThreshold: 335
-    coldDamageThreshold: 230
     currentTemperature: 310.15
     specificHeat: 46
+  - type: TemperatureDamage
+    heatDamageThreshold: 335
+    coldDamageThreshold: 230
     coldDamage:
       types:
         Cold : 0.05 #per second, scales with temperature & other constants
@@ -2498,7 +2570,10 @@
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 50
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
@@ -2562,8 +2637,10 @@
   - type: Spider
   - type: IgnoreSpiderWeb
   - type: Bloodstream
-    bloodMaxVolume: 150
-    bloodReagent: CopperBlood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 150
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
@@ -2719,9 +2796,10 @@
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
-      bloodMaxVolume: 150
-      bloodReagent: Laughter
-
+      bloodReferenceSolution:
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 150
 - type: entity
   name: wizard spider
   parent: MobGiantSpider
@@ -2917,7 +2995,10 @@
     attributes:
       gender: epicene
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -3050,18 +3131,22 @@
     attributes:
       gender: epicene
   - type: Bloodstream
-    bloodReagent: DemonsBlood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: DemonsBlood
+        Quantity: 150
   - type: Damageable
     damageContainer: BiologicalMetaphysical
     damageModifierSet: Infernal
   - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: TemperatureDamage
     heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
-    currentTemperature: 310.15
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants
-    specificHeat: 42
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
@@ -3264,6 +3349,7 @@
       Dead:
         Base: spacecat_dead
   - type: Temperature
+  - type: TemperatureDamage
     heatDamageThreshold: 423
     coldDamageThreshold: 0
   - type: Tag
@@ -3580,7 +3666,10 @@
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
   - type: Bloodstream
-    bloodMaxVolume: 60
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 60
   - type: CanEscapeInventory
     baseResistTime: 3
   - type: MobPrice
@@ -3663,6 +3752,7 @@
   - type: ReplacementAccent
     accent: pig
   - type: SentienceTarget
+    weight: 0.050 # Corvax-Wega-Add
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
     factions:
@@ -3699,8 +3789,10 @@
     speciesId: cat
     templateId: pet
   - type: Bloodstream
-    bloodReagent: Sap
-    bloodMaxVolume: 60
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sap
+        Quantity: 60
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3751,6 +3843,8 @@
     reformTime: 10
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
+  - type: TTS # Corvax-TTS
+    voice: Omu
   # Corvax-Wega-Genetics-start
   - type: DnaModifier
     upper: MobDiona
@@ -3809,7 +3903,10 @@
     - id: FoodMeat
       amount: 4
   - type: Bloodstream
-    bloodMaxVolume: 300
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 300
     # Horns though
   - type: MeleeWeapon
     damage:

@@ -15,16 +15,16 @@
     - belt
   - type: Storage
     grid:
-    - 0,0,7,4
+    - 0,0,7,5
     maxItemSize: Normal
     quickInsert: true
     areaInsert: true
     whitelist:
       components:
-        - LightBulb
         - Battery
         - Circuitboard
+        - FloorTile
       tags:
-        - CableCoil
         - ConstructionMaterial
   - type: Dumpable
+  - type: MagnetPickup

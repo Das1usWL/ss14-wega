@@ -7,6 +7,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -140,7 +141,7 @@ public sealed partial class SurgerySystem
             _popup.PopupEntity(Loc.GetString("surgery-limb-torn-off", ("limb", Name(limbId))), patient, PopupType.SmallCaution);
 
             _audio.PlayPvs(GibSound, patient);
-            if (!_mobState.IsDead(patient) && !HasComp<PainNumbnessComponent>(patient) && !HasComp<SyntheticOperatedComponent>(patient))
+            if (!_mobState.IsDead(patient) && !HasComp<PainNumbnessStatusEffectComponent>(patient) && !HasComp<SyntheticOperatedComponent>(patient))
                 _chat.TryEmoteWithoutChat(patient, _proto.Index(Scream), true);
 
             _pain.AdjustPain(patient, "Physical", 250f);
@@ -231,7 +232,7 @@ public sealed partial class SurgerySystem
                     _bloodstream.TryModifyBleedAmount(entity.Owner, 5f);
 
                 _audio.PlayPvs(GibSound, entity);
-                if (!_mobState.IsDead(entity) && !HasComp<PainNumbnessComponent>(entity) && !HasComp<SyntheticOperatedComponent>(entity))
+                if (!_mobState.IsDead(entity) && !HasComp<PainNumbnessStatusEffectComponent>(entity) && !HasComp<SyntheticOperatedComponent>(entity))
                     _chat.TryEmoteWithoutChat(entity, _proto.Index(Scream), true);
 
                 _transform.SetCoordinates(limbId, Transform(entity).Coordinates);
@@ -330,9 +331,26 @@ public sealed partial class SurgerySystem
             && damageProto.BlacklistSpecies.Contains(humanoidAppearance.Species))
             return false;
 
-        bodyPart ??= SelectBodyPart(target, damageProto);
-        AddInternalDamage(component, damageId, bodyPart);
+        if (bodyPart != null)
+        {
+            var matchingParts = _body.GetBodyChildren(target)
+                .Where(b => GetBodyPartName(b.Component).Equals(bodyPart, StringComparison.OrdinalIgnoreCase))
+                .ToList();
 
+            if (matchingParts.Count == 0)
+                return false;
+
+            if (matchingParts.All(b => HasComp<SubdermalImplantComponent>(b.Id)))
+                return false;
+        }
+        else
+        {
+            bodyPart = SelectBodyPart(target, damageProto);
+            if (bodyPart == null)
+                return false;
+        }
+
+        AddInternalDamage(component, damageId, bodyPart);
         return true;
     }
 
@@ -387,7 +405,7 @@ public sealed partial class SurgerySystem
         var damagesToRemove = new List<(ProtoId<InternalDamagePrototype> DamageId, string? BodyPart)>();
         foreach (var (damageId, bodyParts) in operated.InternalDamages)
         {
-            if (!_proto.TryIndex<InternalDamagePrototype>(damageId, out var damageProto))
+            if (!_proto.TryIndex(damageId, out var damageProto))
                 continue;
 
             if (damageProto.Category is DamageCategory.PhysicalTrauma or DamageCategory.Burns)

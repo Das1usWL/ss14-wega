@@ -23,8 +23,9 @@
   recipeUnlocks:
   - WeaponLaserCannon
   - WeaponXrayCannon
-  - WeaponDominator
   - WeaponTaser
+  - WeaponDominator
+  - BorgModuleLethal
   - PortableRechargerBag
   - PortableRechargerTurbo
 

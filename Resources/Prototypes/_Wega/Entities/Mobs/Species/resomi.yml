@@ -50,6 +50,7 @@
         layer:
         - MobLayer
   - type: HumanoidAppearance
+    height: 150
     species: Resomi
   - type: Hunger
   - type: Puller
@@ -65,7 +66,10 @@
     prototype: Resomi
     requiredLegs: 2
   - type: Bloodstream
-    bloodReagent: ResomiBlood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: ResomiBlood
+        Quantity: 300
     bloodlossDamage:
       types:
         Bloodloss: 1 # They take more damage because they have low blood.
@@ -81,10 +85,11 @@
       types:
         Slash: 5
   - type: Temperature
-    heatDamageThreshold: 325
-    coldDamageThreshold: 230
     currentTemperature: 310.15
     specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 325
+    coldDamageThreshold: 230
     coldDamage:
       types:
         Cold : 0.1 #per second, scales with temperature & other constants
@@ -213,6 +218,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
+    height: 150
     species: Resomi
   - type: Hands
     handDisplacement:

@@ -26,6 +26,7 @@
   name: cult robe
   description: "A set of robes worn by followers of the blood cult. Put on your hood and remove your ID card to hide your identity."
   components:
+  - type: AllowSuitStorage
   - type: Sprite
     sprite: _Wega/Clothing/OuterClothing/Coats/cultrobesalt.rsi
   - type: Clothing
@@ -57,12 +58,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 2
-        Slash: 2
-        Piercing: 2
-        Heat: 2
+        Blunt: 1.5
+        Slash: 1.5
+        Piercing: 1.5
+        Heat: 1.5
   - type: ExplosionResistance
-    damageCoefficient: 2
+    damageCoefficient: 1.5
   - type: ClothingSpeedModifier
     walkModifier: 1.6
     sprintModifier: 1.6
@@ -79,3 +80,25 @@
     sprite: _Wega/Clothing/OuterClothing/Coats/postman.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodPostman
+
+- type: entity
+  parent: ClothingOuterCoatCaptain
+  id: ClothingOuterCoatSherif
+  name: sherif's jacket
+  description: Captain's formal jacket, inlaid with gold.
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/OuterClothing/Coats/captain_green.rsi
+  - type: Clothing
+    sprite: _Wega/Clothing/OuterClothing/Coats/captain_green.rsi
+
+- type: entity
+  parent: ClothingOuterCoatCaptain
+  id: ClothingOuterCoatWhite
+  name: white capitan's jacket
+  description: Captain's formal jacket, inlaid with gold.
+  components:
+  - type: Sprite
+    sprite: _Wega/Clothing/OuterClothing/Coats/captain_white.rsi
+  - type: Clothing
+    sprite: _Wega/Clothing/OuterClothing/Coats/captain_white.rsi

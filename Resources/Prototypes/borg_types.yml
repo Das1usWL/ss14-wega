@@ -6,7 +6,7 @@
   dummyPrototype: BorgChassisGeneric
 
   # Functional
-  extraModuleCount: 5
+  extraModuleCount: 3
   moduleWhitelist:
     tags:
     - BorgModuleGeneric
@@ -14,12 +14,23 @@
 
   defaultModules:
   - BorgModuleTool
-  - BorgModuleInflatable
-  - BorgModuleArtifact
-  - BorgModuleAnomaly
+# Corvax-Wega-start
+  - BorgModuleCommonMedical
+  - BorgModuleCommonPickaxe
+  - BorgModuleCommonFight
+  - BorgModuleCommonConstruction
+  - BorgModuleCleaningCommon
+  - BorgModuleCommonCandy
+  # - BorgModuleInflatable
+  # - BorgModuleArtifact
+  # - BorgModuleAnomaly
   radioChannels:
   - Science
-
+  - Engineering
+  - Medical
+  - Service
+  - Supply
+ # Corvax-Wega-end
   # Visual
   inventoryTemplateId: borgShort
   spriteBodyState: robot
@@ -55,6 +66,17 @@
   radioChannels:
   - Engineering
   - Science
+
+# Corvax-Wega-start
+  addComponents:
+  - type: ShowElectrocutionHUD
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+    - Android
+  - type: ShowAccessReaderSettings
+# Corvax-Wega-end
 
   # Visual
   inventoryTemplateId: borgShort
@@ -92,6 +114,30 @@
   - Supply
   - Science
 
+# Corvax-Wega-start
+  addComponents:
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.BorgSwitchableTypeUiKey.SelectBorgType:
+        type: BorgSelectTypeUserInterface
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
+  - type: RadarConsole
+    followEntity: true
+  - type: HandheldGPS
+# Corvax-Wega-end
+
   # Visual
   inventoryTemplateId: borgTall
   spriteBodyState: miner
@@ -120,13 +166,35 @@
     - BorgModuleJanitor
 
   defaultModules:
-  - BorgModuleTool
+  - BorgModuleTool # Corvax-Wega-add
   - BorgModuleCleaning
   - BorgModuleCustodial
 
   radioChannels:
   - Science
   - Service
+
+# Corvax-Wega-start
+  addComponents:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 100
+        reagents:
+          - ReagentId: SpaceCleaner
+            Quantity: 100
+  - type: SolutionRegeneration
+    solution: tank
+    generated:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 1
+  - type: ReagentTank
+  - type: ExaminableSolution
+    solution: tank
+  - type: DrainableSolution
+    solution: tank
+# Corvax-Wega-end
 
   # Visual
   inventoryTemplateId: borgShort
@@ -156,7 +224,6 @@
     - BorgModuleMedical
 
   defaultModules:
-  - BorgModuleTool
   - BorgModuleChemical
   - BorgModuleTopicals
   - BorgModuleRescue
@@ -206,8 +273,8 @@
     - BorgModuleService
 
   defaultModules:
-  - BorgModuleTool
 # Corvax-Wega-Start
+  # - BorgModuleTool
   # - BorgModuleMusique
   - BorgModuleCook
   - BorgModuleService
@@ -219,6 +286,27 @@
   radioChannels:
   - Science
   - Service
+
+# Corvax-Wega-start
+  addComponents:
+  - type: ShowThirstIcons
+  - type: ShowHungerIcons
+  - type: Instrument
+    allowPercussion: false
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.BorgSwitchableTypeUiKey.SelectBorgType:
+        type: BorgSelectTypeUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+# Corvax-Wega-end
 
   # Visual
   inventoryTemplateId: borgTall

@@ -8,6 +8,8 @@ using Content.Server.Prayer;
 using Content.Shared.Buckle;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Genetics;
@@ -547,14 +549,56 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                     return componentType != null && HasComp(uid, componentType);
                 });
 
-            if (hasComponent && enzymePrototype.TypeDeviation == EnzymesType.Disease)
+            if (hasComponent)
             {
-                enzyme.HexCode = GetHexCodeDisease();
+                enzyme.HexCode = GetHexCodeForType(enzymePrototype.TypeDeviation);
                 totalInstability += enzymePrototype.CostInstability;
+
+                if (enzymePrototype.TypeDeviation != EnzymesType.Disease
+                    && enzymePrototype.AddComponent != null)
+                {
+                    foreach (var componentEntry in enzymePrototype.AddComponent)
+                    {
+                        var componentType = componentEntry.Value.Component?.GetType();
+                        if (componentType != null && HasComp(uid, componentType))
+                            component.InitialAbilities.Add(componentType);
+                    }
+                }
             }
         }
 
         UpdateInstability(uid, component, totalInstability);
+    }
+
+    private string[] GetHexCodeForType(EnzymesType type)
+    {
+        int firstDigit;
+        switch (type)
+        {
+            case EnzymesType.Disease:
+            case EnzymesType.Minor:
+                firstDigit = 9;
+                break;
+
+            case EnzymesType.Intermediate:
+                firstDigit = 0xC;
+                break;
+
+            case EnzymesType.Base:
+                firstDigit = 0xE;
+                break;
+
+            default:
+                firstDigit = _random.Next(0, 16);
+                break;
+        }
+
+        return new[]
+        {
+            firstDigit.ToString("X1"),
+            _random.Next(0, 16).ToString("X1"),
+            _random.Next(0, 16).ToString("X1")
+        };
     }
 
     private string[] GetHexCodeDisease()
@@ -788,7 +832,8 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                     foreach (var componentEntry in enzymePrototype.AddComponent)
                     {
                         var componentType = componentEntry.Value.Component?.GetType();
-                        if (componentType != null && HasComp(ent, componentType))
+                        if (componentType != null && HasComp(ent, componentType)
+                            && !ent.Comp.InitialAbilities.Contains(componentType))
                         {
                             RemComp(ent, componentType);
                             totalInstability -= enzymePrototype.CostInstability;
@@ -821,11 +866,8 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
             // Zero add an entity
             _buckle.TryUnbuckle(target, target, true);
             var child = _entManager.SpawnEntity(component.Lowest, Transform(target).Coordinates);
-            if (TryComp<DamageableComponent>(child, out var damageParent)
-                && _mobThreshold.GetScaledDamage(target, child, out var damage) && damage != null)
-            {
-                _damage.SetDamage(child, damageParent, damage);
-            }
+            if (_mobThreshold.GetScaledDamage(target, child, out var damage) && damage != null)
+                _damage.SetDamage(child, damage);
 
             EnsureComp<DnaLowestComponent>(child).Parent = target;
 
@@ -903,11 +945,8 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                 if (_mindSystem.TryGetMind(target, out var mindIdLowest, out var mindLowest))
                     _mindSystem.TransferTo(mindIdLowest, parent, mind: mindLowest);
 
-                if (TryComp<DamageableComponent>(parent, out var parentDamage)
-                    && _mobThreshold.GetScaledDamage(target, parent, out var damageLowest) && damageLowest != null)
-                {
-                    _damage.SetDamage(parent, parentDamage, damageLowest);
-                }
+                if (_mobThreshold.GetScaledDamage(target, parent, out var damageLowest) && damageLowest != null)
+                    _damage.SetDamage(parent, damageLowest);
 
                 if (TryComp<DnaModifierComponent>(parent, out var dnaModifier))
                 {
@@ -932,11 +971,8 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
             // Zero add an entity
             _buckle.TryUnbuckle(target, target, true);
             var child = _entManager.SpawnEntity(component.Upper, Transform(target).Coordinates);
-            if (TryComp<DamageableComponent>(child, out var damageParent)
-                && _mobThreshold.GetScaledDamage(target, child, out var damage) && damage != null)
-            {
-                _damage.SetDamage(child, damageParent, damage);
-            }
+            if (_mobThreshold.GetScaledDamage(target, child, out var damage) && damage != null)
+                _damage.SetDamage(child, damage);
 
             // First undress
             if (_inventory.TryGetContainerSlotEnumerator(target, out var enumerator))

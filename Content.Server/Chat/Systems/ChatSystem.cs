@@ -36,6 +36,8 @@ using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using Content.Shared.Strangulation; // Corvax-Wega-Strangulation
 using Content.Shared.SoundInsolation; // Corvax-Wega-SoundInsolation
+using Content.Shared.Mind; // Corvax-Wega-MindChat
+using Content.Shared.Blood.Cult.Components; // Corvax-Wega-Blood-Cult
 
 namespace Content.Server.Chat.Systems;
 
@@ -60,7 +62,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly SoundInsulationSystem _soundInsulation = default!; // Corvax-Wega-SoundInsolation
 
@@ -231,11 +232,19 @@ public sealed partial class ChatSystem : SharedChatSystem
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
         {
-            if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
+            if (TryProcessRadioMessage(source, message, out var modMessage, out var channel))
             {
                 SendEntityWhisper(source, modMessage, range, channel, nameOverride, hideLog, ignoreActionBlocker);
                 return;
             }
+
+            // Corvax-Wega-MindChat-start
+            if (TryProcessMindMessage(source, message, out var mindMessage, out var mindChannel) && mindChannel != null)
+            {
+                SendMindMessage(source, mindMessage, mindChannel, ignoreActionBlocker);
+                return;
+            }
+            // Corvax-Wega-MindChat-end
         }
 
         // Otherwise, send whatever type.
@@ -288,6 +297,12 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         // If crit player LOOC is disabled, don't send the message at all.
         if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
+            return;
+
+        // Systems can differentiate Looc and DeadChat by type, and cancel the speak attempt if necessary.
+        var ev = new InGameOocMessageAttemptEvent(player, sendType);
+        RaiseLocalEvent(source, ref ev, true);
+        if (ev.Cancelled)
             return;
 
         switch (sendType)
@@ -379,6 +394,69 @@ public sealed partial class ChatSystem : SharedChatSystem
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
     }
 
+    // Corvax-Wega-MindChat-start
+    /// <inheritdoc/>
+    public override void SendMindMessage(
+        EntityUid source,
+        string message,
+        MindChannelPrototype channel,
+        bool ignoreActionBlocker = false)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        if (!ignoreActionBlocker && !_actionBlocker.CanSpeak(source))
+            return;
+
+        var name = MetaData(source).EntityName;
+        name = FormattedMessage.EscapeText(name);
+
+        var wrappedMessage = Loc.GetString("chat-mind-message-wrap",
+            ("color", channel.Color),
+            ("channel", $"\\[{channel.LocalizedName}\\]"),
+            ("name", name),
+            ("message", message));
+
+        // Send to all entities with the same mind channel
+        foreach (var (session, _) in GetRecipients(source, MindChatRange))
+        {
+            if ((!TryComp<MindLinkComponent>(session.AttachedEntity, out var mindLink) || !mindLink.Channels.Contains(channel.ID))
+                && !HasComp<AdminMindLinkListenerComponent>(session.AttachedEntity))
+                continue;
+
+            _chatManager.ChatMessageToOne(
+                ChatChannel.Mind,
+                message,
+                wrappedMessage,
+                source,
+                false,
+                session.Channel);
+        }
+
+        // Also send a whisper
+        TrySendInGameICMessage(
+            source,
+            message,
+            InGameICChatType.Whisper,
+            ChatTransmitRange.Normal,
+            nameOverride: name,
+            ignoreActionBlocker: true);
+
+        // Log to admin logs
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"Mind message from {ToPrettyString(source):user} on {channel.LocalizedName}: {message}");
+
+        // Record for replay
+        var chat = new ChatMessage(
+            ChatChannel.Mind,
+            message,
+            wrappedMessage,
+            GetNetEntity(source),
+            null);
+        _replay.RecordServerMessage(chat);
+    }
+    // Corvax-Wega-MindChat-end
+
     #endregion
 
     #region Private API
@@ -440,18 +518,18 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (originalMessage == message)
         {
             if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user} as {name}: {originalMessage}.");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {source} as {name}: {originalMessage}.");
             else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}.");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {source}: {originalMessage}.");
         }
         else
         {
             if (name != Name(source))
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Say from {ToPrettyString(source):user} as {name}, original: {originalMessage}, transformed: {message}.");
+                    $"Say from {source} as {name}, original: {originalMessage}, transformed: {message}.");
             else
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
+                    $"Say from {source}, original: {originalMessage}, transformed: {message}.");
         }
     }
 
@@ -553,18 +631,18 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (originalMessage == message)
             {
                 if (name != Name(source))
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user} as {name}: {originalMessage}.");
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {source} as {name}: {originalMessage}.");
                 else
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {originalMessage}.");
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {source}: {originalMessage}.");
             }
             else
             {
                 if (name != Name(source))
                     _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Whisper from {ToPrettyString(source):user} as {name}, original: {originalMessage}, transformed: {message}.");
+                    $"Whisper from {source} as {name}, original: {originalMessage}, transformed: {message}.");
                 else
                     _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Whisper from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
+                    $"Whisper from {source}, original: {originalMessage}, transformed: {message}.");
             }
     }
 
@@ -599,9 +677,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
         if (!hideLog)
             if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user} as {name}: {action}");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {source} as {name}: {action}");
             else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {source}: {action}");
     }
 
     // ReSharper disable once InconsistentNaming
@@ -624,11 +702,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("message", FormattedMessage.EscapeText(message)));
 
         SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, player.UserId);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {source}: {message}");
     }
 
     private void SendDeadChat(EntityUid source, ICommonSession player, string message, bool hideChat)
     {
+        if (HasComp<BloodCultGhostComponent>(source)) // Corvax-Wega-Blood-Cult-Add
+            return; // Corvax-Wega-Blood-Cult-Add
+
         var clients = GetDeadChatClients();
         var playerName = Name(source);
         string wrappedMessage;
@@ -638,7 +719,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                 ("userName", player.Channel.UserName),
                 ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {source}: {message}");
         }
         else
         {
@@ -646,7 +727,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                 ("playerName", (playerName)),
                 ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {source}: {message}");
         }
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, true, clients.ToList(), author: player.UserId);
@@ -787,7 +868,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
-        RaiseLocalEvent(ev);
+        RaiseLocalEvent(sender, ev, true);
 
         return ev.Message;
     }
@@ -809,6 +890,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             .AddWhereAttachedEntity(HasComp<GhostComponent>)
             .Recipients
             .Union(_adminManager.ActiveAdmins)
+            .Where(d => !HasComp<BloodCultGhostComponent>(d.AttachedEntity)) // Corvax-Wega-Blood-Cult-Add
             .Select(p => p.Channel);
     }
 

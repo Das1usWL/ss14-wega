@@ -4,6 +4,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: ShowJobIcons
+  - type: ShowSquadIcons # Corvax-Wega-Add
   - type: ShowMindShieldIcons
   - type: ShowCriminalRecordIcons
   - type: ShowContrabandDetails
@@ -175,6 +176,10 @@
   - type: Construction
     graph: HudMedSec
     node: medsecHud
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HudMedSec
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, ShowMedicalIcons]

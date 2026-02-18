@@ -75,8 +75,8 @@
   - Trinkets
   - GroupSpeciesBreathTool
   # Corvax-Wega-start
-  - Top
-  - Bottom
+  - TopSecurity
+  - BottomSecurity
   - Socks
   # Corvax-Wega-end
 
@@ -92,12 +92,11 @@
   - SeniorOfficerBelt
   - SurvivalSecurity
   - Trinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
   # Corvax-Wega-start
   - SeniorOfficerItem
-  - Top
-  - Bottom
+  - TopSecurity
+  - BottomSecurity
   - Socks
   # Corvax-Wega-end
 
